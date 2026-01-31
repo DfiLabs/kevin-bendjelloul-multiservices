@@ -10,12 +10,12 @@
     "publishEmailInSchema": false,
     "whatsapp": {
       "enabled": true,
-      "message": "Bonjour, je souhaite un devis travaux (rénovation / remise en état). Zone: Hérault. Mon besoin:"
+      "message": "Bonjour, je souhaite un devis (multi-services). Zone: Béziers / Hérault. Mon besoin:"
     }
   },
-  "ctaReassurance": ["Devis clair", "Planning annoncé", "Chantier laissé propre"],
+  "ctaReassurance": ["Devis clair", "Finitions soignées", "Chantier laissé propre"],
   "hero": {
-    "subheadline": "Multi-services à Béziers et dans l’Hérault - remise en état, peinture, sols, petits travaux",
+    "subheadline": "Artisan multi-services à Béziers et dans l’Hérault - remise en état, peinture, sols, petits travaux",
     "photo": "https://images.pexels.com/photos/834892/pexels-photo-834892.jpeg?auto=compress&cs=tinysrgb&w=1600"
   },
   "serviceArea": {
@@ -24,9 +24,9 @@
   },
   "proofPack": {
     "badges": [
-      { "label": "Travail propre", "enabled": true },
+      { "label": "Finitions soignées", "enabled": true },
       { "label": "Devis clair", "enabled": true },
-      { "label": "Planning annoncé", "enabled": true },
+      { "label": "Sens du détail", "enabled": true },
       { "label": "Chantier laissé propre", "enabled": true }
     ],
     "gallery": [

@@ -1,0 +1,404 @@
+/* Artisan / artistic theme overrides (distinct from the electrician site) */
+
+:root {
+  --paper: #f4efe6;
+  --paper2: rgba(255, 255, 255, 0.62);
+  --paper3: rgba(255, 255, 255, 0.82);
+  --ink: rgba(20, 17, 12, 0.96);
+  --ink2: rgba(20, 17, 12, 0.72);
+  --ink3: rgba(20, 17, 12, 0.52);
+  --clay: #c56a3a;
+  --sage: #3e6b55;
+  --sun: #f1b54a;
+
+  /* Re-map base tokens used across the existing CSS */
+  --bg0: var(--paper);
+  --bg1: #fbf9f3;
+  --panel: var(--paper2);
+  --panel2: var(--paper3);
+  --border: rgba(20, 17, 12, 0.16);
+  --text: var(--ink);
+  --muted: var(--ink2);
+  --muted2: var(--ink3);
+  --shadow: 0 18px 55px rgba(15, 12, 8, 0.14);
+
+  --blue: var(--sage);
+  --cyan: #4aa47a;
+  --amber: var(--sun);
+
+  --radius: 18px;
+  --radius2: 22px;
+}
+
+body {
+  background: radial-gradient(900px 520px at 16% 8%, rgba(197, 106, 58, 0.09), transparent 62%),
+    radial-gradient(820px 520px at 86% 18%, rgba(62, 107, 85, 0.10), transparent 62%),
+    linear-gradient(180deg, var(--bg0) 0%, var(--bg1) 60%, var(--bg0) 100%);
+}
+
+/* Replace the techy glow layers with paper texture + ink wash */
+body::before {
+  background: url("./assets/noise.svg");
+  opacity: 0.18;
+  mix-blend-mode: multiply;
+}
+
+body::after {
+  background: radial-gradient(880px 720px at var(--scroll-glow-x) var(--scroll-glow-y), rgba(197, 106, 58, 0.12), transparent 62%),
+    radial-gradient(820px 680px at 70% calc(var(--scroll-glow-y) + 10%), rgba(62, 107, 85, 0.12), transparent 62%);
+  opacity: 0.26;
+  mix-blend-mode: multiply;
+}
+
+.scroll-wow {
+  background: radial-gradient(var(--wow-size) var(--wow-size) at var(--wow-x) var(--wow-y), rgba(20, 17, 12, 0.06), transparent 60%),
+    url("./assets/noise.svg");
+  background-size: auto, 220px 220px;
+  background-position: 0 0, 0 var(--grid-y);
+  opacity: 0.34;
+  mix-blend-mode: multiply;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .scroll-wow,
+  body::after {
+    opacity: 0.16;
+  }
+}
+
+/* Typography: artisan = serif headlines + softer tracking */
+h1,
+h2,
+h3 {
+  font-family: ui-serif, "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
+  letter-spacing: -0.2px;
+}
+
+h1 {
+  letter-spacing: -0.6px;
+}
+
+.brand-name {
+  font-family: ui-serif, "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
+  font-weight: 900;
+}
+
+.text-glow {
+  color: var(--ink);
+  text-shadow: none;
+  background: none;
+  position: relative;
+  display: inline-block;
+  z-index: 0;
+}
+.text-glow::after {
+  content: "";
+  position: absolute;
+  left: -0.08em;
+  right: -0.08em;
+  bottom: 0.06em;
+  height: 0.58em;
+  background: radial-gradient(120px 36px at 12% 40%, rgba(241, 181, 74, 0.42), transparent 70%),
+    linear-gradient(90deg, rgba(197, 106, 58, 0.22), rgba(62, 107, 85, 0.20));
+  border-radius: 32px 18px 28px 14px;
+  transform: rotate(-1.1deg);
+  filter: blur(0.2px);
+  z-index: -1;
+}
+
+/* Header: remove glassmorphism */
+.topbar {
+  background: rgba(244, 239, 230, 0.92);
+  backdrop-filter: none;
+  border-bottom: 1px solid rgba(20, 17, 12, 0.14);
+}
+.topbar.is-scrolled {
+  background: rgba(244, 239, 230, 0.97);
+  box-shadow: 0 14px 34px rgba(15, 12, 8, 0.10);
+}
+
+.brand-mark {
+  border-radius: 16px;
+  border: 1px solid rgba(20, 17, 12, 0.18);
+  background: rgba(255, 255, 255, 0.56);
+  box-shadow: none;
+}
+
+.pill {
+  border-style: dashed;
+  border-color: rgba(20, 17, 12, 0.18);
+  background: rgba(255, 255, 255, 0.46);
+}
+
+/* Section titles: brush underline */
+.section-head h2,
+.band-head h2 {
+  display: inline-block;
+  position: relative;
+}
+.section-head h2::after,
+.band-head h2::after {
+  content: "";
+  position: absolute;
+  left: -0.1em;
+  right: -0.1em;
+  bottom: -0.18em;
+  height: 0.38em;
+  background: linear-gradient(90deg, rgba(241, 181, 74, 0.30), rgba(62, 107, 85, 0.24), rgba(197, 106, 58, 0.26));
+  border-radius: 18px 10px 16px 9px;
+  transform: rotate(-0.7deg);
+  z-index: -1;
+}
+
+/* Buttons: ink + paper, more "atelier" */
+.btn {
+  border-color: rgba(20, 17, 12, 0.16);
+  background: rgba(255, 255, 255, 0.58);
+  box-shadow: 0 10px 28px rgba(15, 12, 8, 0.08);
+}
+.btn:hover {
+  background: rgba(255, 255, 255, 0.78);
+  border-color: rgba(20, 17, 12, 0.22);
+}
+
+.btn-primary {
+  background: linear-gradient(180deg, rgba(20, 17, 12, 0.96), rgba(20, 17, 12, 0.88));
+  border-color: rgba(20, 17, 12, 0.22);
+  color: rgba(244, 239, 230, 0.96);
+  box-shadow: 0 26px 65px rgba(15, 12, 8, 0.20);
+}
+.btn-primary:hover {
+  background: linear-gradient(180deg, rgba(20, 17, 12, 1), rgba(20, 17, 12, 0.92));
+  border-color: rgba(20, 17, 12, 0.26);
+}
+
+.btn-ghost {
+  background: transparent;
+  border-style: dashed;
+}
+
+.nav-cta {
+  border-style: dashed;
+  border-color: rgba(20, 17, 12, 0.20);
+  background: rgba(255, 255, 255, 0.56);
+}
+
+/* Hero layout: replace the right “tech card” with an artisan collage */
+.hero-bg {
+  background: none;
+  animation: none;
+}
+
+.hero.has-hero-photo::before {
+  background: linear-gradient(90deg, rgba(244, 239, 230, 0.94) 0%, rgba(244, 239, 230, 0.90) 50%, rgba(244, 239, 230, 0.64) 100%);
+}
+
+.hero-inner {
+  grid-template-columns: 1.06fr 0.94fr;
+  gap: 26px;
+  align-items: center;
+}
+
+.hero-sub {
+  font-weight: 900;
+}
+
+.hero-art {
+  display: grid;
+  gap: 14px;
+}
+
+.collage {
+  position: relative;
+  min-height: 330px;
+}
+
+.polaroid {
+  position: absolute;
+  width: min(340px, 72%);
+  background: rgba(255, 255, 255, 0.78);
+  border: 1px solid rgba(20, 17, 12, 0.18);
+  box-shadow: 0 22px 55px rgba(15, 12, 8, 0.14);
+  border-radius: 20px 16px 22px 14px;
+  padding: 10px 10px 14px;
+  transform: rotate(var(--r, -2deg));
+}
+.polaroid img {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  height: auto;
+  display: block;
+  object-fit: cover;
+  border-radius: 16px 12px 18px 10px;
+  filter: saturate(1.05) contrast(1.03);
+}
+.polaroid-cap {
+  margin-top: 10px;
+  font-size: 12px;
+  font-weight: 820;
+  color: rgba(20, 17, 12, 0.80);
+}
+.polaroid-tape {
+  position: absolute;
+  top: -10px;
+  left: 34%;
+  width: 92px;
+  height: 26px;
+  background: rgba(255, 255, 255, 0.45);
+  border: 1px solid rgba(20, 17, 12, 0.12);
+  border-radius: 8px;
+  transform: rotate(-6deg);
+  box-shadow: 0 10px 22px rgba(15, 12, 8, 0.08);
+}
+.polaroid.p1 {
+  top: 0;
+  left: 0;
+  --r: -2.8deg;
+}
+.polaroid.p2 {
+  top: 34px;
+  right: 0;
+  --r: 2.2deg;
+}
+.polaroid.p3 {
+  bottom: -6px;
+  left: 14%;
+  width: min(380px, 78%);
+  --r: -0.6deg;
+}
+
+.atelier {
+  border: 1px dashed rgba(20, 17, 12, 0.20);
+  background: rgba(255, 255, 255, 0.52);
+  border-radius: 22px 18px 24px 16px;
+  padding: 14px 14px;
+  box-shadow: 0 18px 55px rgba(15, 12, 8, 0.10);
+}
+.atelier-top {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+}
+.atelier-title {
+  font-weight: 900;
+  font-size: 16px;
+}
+.atelier-chip {
+  font-size: 12px;
+  color: rgba(20, 17, 12, 0.70);
+  border: 1px solid rgba(20, 17, 12, 0.16);
+  border-radius: 999px;
+  padding: 6px 10px;
+  background: rgba(255, 255, 255, 0.52);
+}
+.atelier-list {
+  margin: 10px 0 0;
+  padding-left: 18px;
+  color: rgba(20, 17, 12, 0.78);
+}
+.atelier-actions {
+  margin-top: 10px;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+@media (max-width: 900px) {
+  .hero-inner {
+    grid-template-columns: 1fr;
+  }
+  .collage {
+    min-height: 300px;
+  }
+}
+
+/* Cards & sections: more paper / less glass */
+.card,
+.section-card,
+.contact-card,
+.form,
+.legal {
+  background: rgba(255, 255, 255, 0.56);
+  border-color: rgba(20, 17, 12, 0.16);
+  box-shadow: 0 18px 55px rgba(15, 12, 8, 0.12);
+}
+
+.card {
+  border-radius: 22px 18px 24px 16px;
+}
+.card::after {
+  display: none;
+}
+
+.band-proof {
+  background: rgba(255, 255, 255, 0.38);
+}
+
+.band-dark {
+  background: #1b1712;
+  color: rgba(244, 239, 230, 0.94);
+  position: relative;
+  overflow: hidden;
+}
+.band-dark::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: url("./assets/noise.svg");
+  opacity: 0.16;
+  mix-blend-mode: multiply;
+  pointer-events: none;
+}
+
+.badge {
+  border-style: dashed;
+  border-color: rgba(244, 239, 230, 0.18);
+  background: rgba(244, 239, 230, 0.06);
+}
+.badge::before {
+  background: rgba(241, 181, 74, 0.95);
+}
+
+/* Gallery: “polaroid wall” vibe */
+.gallery-card {
+  border-radius: 20px 16px 22px 14px;
+  border-color: rgba(20, 17, 12, 0.16);
+  background: rgba(255, 255, 255, 0.72);
+}
+.gallery-card::after {
+  display: none;
+}
+.gallery-card::before {
+  content: "";
+  position: absolute;
+  top: -10px;
+  left: 16px;
+  width: 82px;
+  height: 24px;
+  background: rgba(255, 255, 255, 0.44);
+  border: 1px solid rgba(20, 17, 12, 0.12);
+  border-radius: 7px;
+  transform: rotate(-7deg);
+  box-shadow: 0 10px 22px rgba(15, 12, 8, 0.08);
+  pointer-events: none;
+}
+.gallery-card:nth-child(2n)::before {
+  left: auto;
+  right: 16px;
+  transform: rotate(6deg);
+}
+
+/* Reviews: handwritten note feel */
+.review {
+  border-radius: 20px 16px 22px 14px;
+  border-style: dashed;
+}
+.review::after {
+  display: none;
+}
+.review-service {
+  color: rgba(241, 181, 74, 0.92);
+}
+

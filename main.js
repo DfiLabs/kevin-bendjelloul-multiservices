@@ -1,4 +1,4 @@
-/* Kevin Bendjelloul - Rénovation & Remise en état (static) */
+/* Kevin Bendjelloul - Multi-services (static) */
 
 const CONFIG = {
   phoneDisplay: "06 32 63 77 23",
@@ -6,7 +6,7 @@ const CONFIG = {
   email: "kevin.benjelloul@gmail.com",
   publishEmailInSchema: false,
   whatsappEnabled: true,
-  whatsappMessage: "Bonjour, je souhaite un devis travaux (rénovation / remise en état). Zone: Hérault. Mon besoin:",
+  whatsappMessage: "Bonjour, je souhaite un devis (multi-services). Zone: Béziers / Hérault. Mon besoin:",
 };
 
 async function loadContentJson() {
@@ -162,6 +162,33 @@ function applyContentJson(content) {
         card.appendChild(media);
         card.appendChild(body);
         gallery.appendChild(card);
+      });
+    }
+
+    // Hero collage (artisan visual): reuse first gallery shots
+    const collage = document.querySelector("[data-hero-collage]");
+    if (collage && Array.isArray(proof.gallery)) {
+      const figures = Array.from(collage.querySelectorAll("figure.polaroid"));
+      const shots = Array.from(collage.querySelectorAll("img[data-hero-shot]"));
+      shots.forEach((img) => {
+        const idx = Number.parseInt(String(img.getAttribute("data-hero-shot") || "0"), 10);
+        const g = proof.gallery[idx];
+        if (!g || typeof g !== "object") return;
+        const src = typeof g.src === "string" ? g.src : "";
+        const alt = typeof g.alt === "string" && g.alt.trim() ? g.alt.trim() : typeof g.title === "string" ? g.title : "Réalisation";
+        if (src && src.trim()) img.src = src;
+        img.alt = alt;
+        const fig = img.closest("figure");
+        const cap = fig ? fig.querySelector(".polaroid-cap") : null;
+        if (cap && typeof g.title === "string" && g.title.trim()) cap.textContent = g.title.trim();
+      });
+
+      // Hide empty figures if gallery is missing entries
+      figures.forEach((fig, i) => {
+        const img = fig.querySelector("img");
+        const hasSrc = img instanceof HTMLImageElement ? Boolean(img.getAttribute("src")) : false;
+        if (!hasSrc) fig.setAttribute("hidden", "true");
+        else fig.removeAttribute("hidden");
       });
     }
 

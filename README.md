@@ -7,9 +7,14 @@ Vitrine statique pour **KB MultiServices** (multi-services bâtiment).
 - `content.json` contient le nom, la zone, les services, les photos, les avis, etc.
 - Le fichier `main.js` charge `content.json` au chargement de la page.
 
+## Design (version artisan)
+
+- `styles.css`: base (structure + composants)
+- `artisan.css`: surcouche “artisan / artistique” (textures papier, collage, style distinct)
+
 ## Prévisualiser en local
 
-Sur macOS, depuis le dossier `kevin_reno_site`:
+Sur macOS, depuis le dossier `websites/kevin_multiservices_site`:
 
 ```bash
 python3 -m http.server 5173
