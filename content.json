@@ -1,0 +1,157 @@
+{
+  "brand": {
+    "name": "KB MultiServices",
+    "subtitle": "Multi-services bâtiment - Béziers & Hérault (34)"
+  },
+  "contact": {
+    "phoneDisplay": "06 32 63 77 23",
+    "phoneTel": "+33632637723",
+    "email": "kevin.benjelloul@gmail.com",
+    "publishEmailInSchema": false,
+    "whatsapp": {
+      "enabled": true,
+      "message": "Bonjour, je souhaite un devis travaux (rénovation / remise en état). Zone: Hérault. Mon besoin:"
+    }
+  },
+  "ctaReassurance": ["Devis clair", "Planning annoncé", "Chantier laissé propre"],
+  "hero": {
+    "subheadline": "Multi-services à Béziers et dans l’Hérault - remise en état, peinture, sols, petits travaux",
+    "photo": "https://images.pexels.com/photos/834892/pexels-photo-834892.jpeg?auto=compress&cs=tinysrgb&w=1600"
+  },
+  "serviceArea": {
+    "primary": "Béziers",
+    "secondary": "Hérault (34)"
+  },
+  "proofPack": {
+    "badges": [
+      { "label": "Travail propre", "enabled": true },
+      { "label": "Devis clair", "enabled": true },
+      { "label": "Planning annoncé", "enabled": true },
+      { "label": "Chantier laissé propre", "enabled": true }
+    ],
+    "gallery": [
+      {
+        "title": "Planification",
+        "location": "Hérault",
+        "src": "https://images.pexels.com/photos/834892/pexels-photo-834892.jpeg?auto=compress&cs=tinysrgb&w=1200",
+        "alt": "Plan de rénovation sur table"
+      },
+      {
+        "title": "Peinture (rouleau)",
+        "location": "Hérault",
+        "src": "https://images.pexels.com/photos/5691631/pexels-photo-5691631.jpeg?auto=compress&cs=tinysrgb&w=1200",
+        "alt": "Rouleau de peinture sur sol"
+      },
+      {
+        "title": "Outillage (détails)",
+        "location": "Hérault",
+        "src": "https://images.pexels.com/photos/4270181/pexels-photo-4270181.jpeg?auto=compress&cs=tinysrgb&w=1200",
+        "alt": "Outil à main (détails)"
+      },
+      {
+        "title": "Préparation support",
+        "location": "Hérault",
+        "src": "https://images.pexels.com/photos/7794439/pexels-photo-7794439.jpeg?auto=compress&cs=tinysrgb&w=1200",
+        "alt": "Mur blanc avec fissure (état existant)"
+      },
+      {
+        "title": "Carrelage (détails)",
+        "location": "Hérault",
+        "src": "https://images.pexels.com/photos/10793658/pexels-photo-10793658.jpeg?auto=compress&cs=tinysrgb&w=1200",
+        "alt": "Gros plan sur des carreaux"
+      },
+      {
+        "title": "Sols (motifs)",
+        "location": "Hérault",
+        "src": "https://images.pexels.com/photos/1652544/pexels-photo-1652544.jpeg?auto=compress&cs=tinysrgb&w=1200",
+        "alt": "Motifs de carrelage au sol"
+      },
+      {
+        "title": "Bois & finitions",
+        "location": "Hérault",
+        "src": "https://images.pexels.com/photos/139311/pexels-photo-139311.jpeg?auto=compress&cs=tinysrgb&w=1200",
+        "alt": "Surface en bois (texture)"
+      }
+    ],
+    "testimonials": [
+      {
+        "name": "Aurelia M.",
+        "date": "Posté le 08 sept. 2025",
+        "service": "Travaux (remise en état)",
+        "rating": 5,
+        "text": "Kevin a fait du bon boulot en électricité et menuiserie, mise en place d’un digicode et remise en service (branchements complexes) d’un parlophone d’immeuble. Bon rapport qualité/prix, serviable et ponctuel.",
+        "tags": ["Excellent rapport qualité/prix"]
+      },
+      {
+        "name": "Inès B.",
+        "date": "Posté le 20 déc. 2025",
+        "service": "Travaux (installation)",
+        "rating": 5,
+        "text": "Très professionnel. Kevin m’a installé une clim, travail propre, rapide, et honnête. Je vous recommande de faire affaire avec lui. Je n’hésiterai pas à le recontacter pour d’autres travaux.",
+        "tags": ["Très sympathique"]
+      },
+      {
+        "name": "Jason M.",
+        "date": "Posté le 29 oct. 2025",
+        "service": "Travaux",
+        "rating": 5,
+        "text": "Le top",
+        "tags": []
+      }
+    ]
+  },
+  "services": [
+    {
+      "id": "remise",
+      "title": "Remise en état",
+      "examples": ["Reprises après travaux", "Avant remise des clés", "Petites réparations + finitions"],
+      "turnaround": "Sous 2-7 jours (selon planning)",
+      "fromPrice": "À partir de: sur devis"
+    },
+    {
+      "id": "peinture",
+      "title": "Peinture & enduits",
+      "examples": ["Préparation supports", "Rebouchage / lissage", "Finitions propres"],
+      "turnaround": "Sous 1-2 semaines (selon surface)",
+      "fromPrice": "À partir de: sur devis"
+    },
+    {
+      "id": "sols",
+      "title": "Sols & plinthes",
+      "examples": ["Dépose / préparation", "Pose sols", "Plinthes / seuils"],
+      "turnaround": "Sous 2-7 jours (selon planning)",
+      "fromPrice": "À partir de: sur devis"
+    },
+    {
+      "id": "sdb",
+      "title": "Salle de bain (petits travaux)",
+      "examples": ["Remplacement accessoires", "Reprises étanchéité (selon cas)", "Joints / finitions"],
+      "turnaround": "Sous 1-2 semaines (selon besoin)",
+      "fromPrice": "À partir de: sur devis"
+    },
+    {
+      "id": "bricolage",
+      "title": "Petits travaux",
+      "examples": ["Fixations / montage", "Retouches", "Optimisations"],
+      "turnaround": "Sous 2-7 jours (selon planning)",
+      "fromPrice": "À partir de: sur devis"
+    },
+    {
+      "id": "nettoyage",
+      "title": "Nettoyage fin de chantier",
+      "examples": ["Remise au propre", "Évacuation légère (selon cas)", "Résultat net"],
+      "turnaround": "Selon chantier",
+      "fromPrice": "À partir de: sur devis"
+    }
+  ],
+  "legal": {
+    "companyName": "MONSIEUR KEVIN BENDJELLOUL",
+    "siren": "990 996 720",
+    "siret": "990 996 720 00019",
+    "vat": "FR21990996720",
+    "ape": "8121Z - Nettoyage courant des bâtiments",
+    "created": "08 septembre 2025",
+    "address": "Chemin des Pins d’Urbain 23, 34370 Cazouls‑lès‑Béziers"
+  }
+}
+
