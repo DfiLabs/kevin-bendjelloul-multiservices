@@ -101,7 +101,7 @@ function applyContentJson(content) {
     });
   }
 
-  // Proof pack (gallery, badges, testimonials)
+  // Proof pack (gallery + badges)
   const proof = content.proofPack && typeof content.proofPack === "object" ? content.proofPack : null;
   if (proof) {
     // Badges
@@ -192,76 +192,7 @@ function applyContentJson(content) {
       });
     }
 
-    // Testimonials
-    const reviews = document.querySelector("[data-testimonials]");
-    if (reviews && Array.isArray(proof.testimonials)) {
-      reviews.innerHTML = "";
-      proof.testimonials.slice(0, 6).forEach((r) => {
-        if (!r || typeof r !== "object") return;
-        const ratingRaw = Number.isFinite(r.rating) ? r.rating : 5;
-        const rating = Math.max(0, Math.min(5, Math.round(ratingRaw)));
-        const stars = "★★★★★".slice(0, rating);
-        const name = typeof r.name === "string" && r.name.trim() ? r.name.trim() : "Client";
-        const date = typeof r.date === "string" && r.date.trim() ? r.date.trim() : "";
-        const service = typeof r.service === "string" && r.service.trim() ? r.service.trim() : "";
-        const text = typeof r.text === "string" ? r.text : "";
-        const tags = Array.isArray(r.tags)
-          ? r.tags.filter((t) => typeof t === "string" && t.trim()).slice(0, 3)
-          : [];
-
-        const card = document.createElement("div");
-        card.className = "review";
-        card.setAttribute("data-parallax", "26");
-
-        const top = document.createElement("div");
-        top.className = "review-top";
-
-        const who = document.createElement("div");
-        who.className = "review-who";
-        const n = document.createElement("div");
-        n.className = "review-name";
-        n.textContent = name;
-        const d = document.createElement("div");
-        d.className = "review-date";
-        d.textContent = date;
-        who.appendChild(n);
-        if (date) who.appendChild(d);
-
-        const s = document.createElement("div");
-        s.className = "review-stars";
-        s.setAttribute("aria-label", `${rating} sur 5`);
-        s.textContent = stars;
-
-        top.appendChild(who);
-        top.appendChild(s);
-
-        const svc = document.createElement("div");
-        svc.className = "review-service";
-        svc.textContent = service;
-
-        const p = document.createElement("div");
-        p.className = "review-text";
-        p.textContent = text;
-
-        card.appendChild(top);
-        if (service) card.appendChild(svc);
-        card.appendChild(p);
-
-        if (tags.length) {
-          const wrap = document.createElement("div");
-          wrap.className = "review-tags";
-          tags.forEach((t) => {
-            const chip = document.createElement("span");
-            chip.className = "review-tag";
-            chip.textContent = t;
-            wrap.appendChild(chip);
-          });
-          card.appendChild(wrap);
-        }
-
-        reviews.appendChild(card);
-      });
-    }
+    // Testimonials intentionally removed for multi-services version.
   }
 }
 
@@ -310,22 +241,7 @@ function setYear() {
   $all("[data-year]").forEach((el) => (el.textContent = String(y)));
 }
 
-function setAvailabilityHint() {
-  const el = $("[data-availability]");
-  if (!el) return;
-  const d = new Date();
-  const day = d.getDay(); // 0..6
-  const map = {
-    0: "À partir de lundi",
-    1: "Cette semaine",
-    2: "Cette semaine",
-    3: "Cette semaine",
-    4: "Cette semaine",
-    5: "Sous 48h",
-    6: "Dès lundi",
-  };
-  el.textContent = map[day] || "Cette semaine";
-}
+// Availability hint removed on purpose (kept simple and timeless).
 
 function applyContactConfig() {
   // Update all phone links (keep text "Appeler" if present)
@@ -788,7 +704,6 @@ function wireScrollTop() {
 
 document.addEventListener("DOMContentLoaded", async () => {
   setYear();
-  setAvailabilityHint();
   const content = await loadContentJson();
   applyContentJson(content);
   applyContactConfig();
