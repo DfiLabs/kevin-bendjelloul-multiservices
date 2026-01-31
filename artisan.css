@@ -361,6 +361,20 @@ h1 {
   background: rgba(241, 181, 74, 0.95);
 }
 
+/* Badges on light background */
+.badges-light {
+  margin-top: 2px;
+}
+.badges-light .badge {
+  background: rgba(255, 255, 255, 0.58);
+  border: 1px dashed rgba(20, 17, 12, 0.20);
+  color: rgba(20, 17, 12, 0.86);
+  box-shadow: 0 12px 30px rgba(15, 12, 8, 0.08);
+}
+.badges-light .badge::before {
+  background: rgba(241, 181, 74, 0.95);
+}
+
 /* Gallery: “polaroid wall” vibe */
 .gallery-card {
   border-radius: 20px 16px 22px 14px;
