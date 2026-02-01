@@ -27,7 +27,8 @@
       { "label": "Finitions soignées", "enabled": true },
       { "label": "Devis clair", "enabled": true },
       { "label": "Sens du détail", "enabled": true },
-      { "label": "Chantier laissé propre", "enabled": true }
+      { "label": "Chantier laissé propre", "enabled": true },
+      { "label": "Priorités claires", "enabled": true }
     ],
     "gallery": [
       {
