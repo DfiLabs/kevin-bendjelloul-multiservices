@@ -191,8 +191,27 @@ h1 {
 .upload-more {
   border-color: rgba(20, 17, 12, 0.20);
 }
-.upload-help {
+.upload-ui {
+  border-color: rgba(20, 17, 12, 0.22);
+  background: rgba(255, 255, 255, 0.56);
+  box-shadow: 0 18px 55px rgba(15, 12, 8, 0.10);
+}
+.upload-icon {
+  border-color: rgba(20, 17, 12, 0.18);
+  background: radial-gradient(240px 140px at 20% 20%, rgba(241, 181, 74, 0.18), transparent 60%),
+    rgba(255, 255, 255, 0.62);
+}
+.upload-sub {
   color: rgba(20, 17, 12, 0.62);
+}
+.upload-count {
+  border-color: rgba(20, 17, 12, 0.18);
+  background: rgba(255, 255, 255, 0.62);
+}
+
+.wa-qr {
+  border-color: rgba(20, 17, 12, 0.18);
+  background: rgba(255, 255, 255, 0.62);
 }
 
 /* Hero layout: replace the right “tech card” with an artisan collage */
