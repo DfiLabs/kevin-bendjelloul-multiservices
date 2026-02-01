@@ -183,6 +183,18 @@ h1 {
   background: rgba(255, 255, 255, 0.56);
 }
 
+/* Photo upload (artisan styling) */
+.upload-thumb {
+  border-color: rgba(20, 17, 12, 0.18);
+  background: rgba(255, 255, 255, 0.60);
+}
+.upload-more {
+  border-color: rgba(20, 17, 12, 0.20);
+}
+.upload-help {
+  color: rgba(20, 17, 12, 0.62);
+}
+
 /* Hero layout: replace the right “tech card” with an artisan collage */
 .hero-bg {
   background: none;
