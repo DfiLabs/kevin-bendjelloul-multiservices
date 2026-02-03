@@ -234,6 +234,125 @@ h1 {
   font-weight: 900;
 }
 
+/* Reduce text presence (more visual) */
+.lead {
+  display: none;
+}
+
+.atelier {
+  margin-top: 10px;
+}
+.atelier-list {
+  margin-top: 8px;
+  font-size: 13px;
+}
+.atelier-list li {
+  margin: 6px 0;
+}
+
+/* Sticky scroll story (desktop wow) */
+.scroll-story {
+  padding: 28px 0 0;
+}
+.story-stage {
+  height: 160vh;
+  position: relative;
+}
+.story-sticky {
+  position: sticky;
+  top: 110px;
+  height: 540px;
+  border-radius: 26px 20px 28px 18px;
+  border: 1px dashed rgba(20, 17, 12, 0.22);
+  background: radial-gradient(920px 520px at 20% 20%, rgba(241, 181, 74, 0.18), transparent 60%),
+    radial-gradient(920px 520px at 82% 22%, rgba(62, 107, 85, 0.16), transparent 62%),
+    rgba(255, 255, 255, 0.36);
+  box-shadow: 0 30px 90px rgba(15, 12, 8, 0.16);
+  overflow: hidden;
+}
+.story-sticky::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: url("./assets/noise.svg");
+  opacity: 0.22;
+  mix-blend-mode: multiply;
+  pointer-events: none;
+}
+.story-stack {
+  position: absolute;
+  inset: 0;
+}
+.story-card {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: min(520px, 86%);
+  transform: translate3d(-50%, -50%, 0);
+  border-radius: 22px 18px 24px 16px;
+  border: 1px solid rgba(20, 17, 12, 0.18);
+  background: rgba(255, 255, 255, 0.72);
+  box-shadow: 0 26px 70px rgba(15, 12, 8, 0.18);
+  overflow: hidden;
+  will-change: transform;
+}
+.story-card img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  aspect-ratio: 16 / 10;
+  object-fit: cover;
+  filter: saturate(1.05) contrast(1.04);
+}
+.story-card::after {
+  content: "";
+  position: absolute;
+  inset: -60px;
+  background: linear-gradient(115deg, transparent 42%, rgba(255, 255, 255, 0.55) 50%, transparent 58%);
+  transform: translateX(var(--sheen-x));
+  opacity: 0.10;
+  pointer-events: none;
+  mix-blend-mode: overlay;
+}
+
+.story-sparks {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+.spark {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  border-radius: 999px;
+  background: rgba(241, 181, 74, 0.95);
+  opacity: calc(0.25 + var(--story-p, 0) * 0.55);
+  box-shadow: 0 0 0 10px rgba(241, 181, 74, 0.10), 0 0 60px rgba(241, 181, 74, 0.22);
+  transform: translate3d(0, 0, 0) scale(calc(0.9 + var(--story-p, 0) * 0.3));
+}
+.spark.s1 {
+  left: 12%;
+  top: 24%;
+}
+.spark.s2 {
+  left: 82%;
+  top: 34%;
+  background: rgba(62, 107, 85, 0.95);
+  box-shadow: 0 0 0 10px rgba(62, 107, 85, 0.10), 0 0 60px rgba(62, 107, 85, 0.22);
+}
+.spark.s3 {
+  left: 22%;
+  top: 74%;
+  background: rgba(197, 106, 58, 0.92);
+  box-shadow: 0 0 0 10px rgba(197, 106, 58, 0.10), 0 0 60px rgba(197, 106, 58, 0.22);
+}
+
+@media (max-width: 900px) {
+  .scroll-story {
+    display: none;
+  }
+}
+
 .hero-art {
   display: grid;
   gap: 14px;

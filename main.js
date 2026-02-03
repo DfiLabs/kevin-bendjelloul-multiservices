@@ -192,6 +192,21 @@ function applyContentJson(content) {
       });
     }
 
+    // Scroll story shots (sticky stack): reuse first gallery shots
+    const stage = document.querySelector("[data-story-stage]");
+    if (stage && Array.isArray(proof.gallery)) {
+      const shots = Array.from(stage.querySelectorAll("img[data-story-shot]"));
+      shots.forEach((img) => {
+        const idx = Number.parseInt(String(img.getAttribute("data-story-shot") || "0"), 10);
+        const g = proof.gallery[idx];
+        if (!g || typeof g !== "object") return;
+        const src = typeof g.src === "string" ? g.src : "";
+        const alt = typeof g.alt === "string" && g.alt.trim() ? g.alt.trim() : typeof g.title === "string" ? g.title : "Réalisation";
+        if (src && src.trim()) img.src = src;
+        img.alt = alt;
+      });
+    }
+
     // Testimonials intentionally removed for multi-services version.
   }
 }
@@ -846,6 +861,62 @@ function wireScrollTop() {
   });
 }
 
+function clamp01(x) {
+  return Math.max(0, Math.min(1, x));
+}
+
+function lerp(a, b, t) {
+  return a + (b - a) * t;
+}
+
+function wireScrollStory() {
+  const prefersReduced = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  if (prefersReduced) return;
+
+  const mq = window.matchMedia("(min-width: 900px)");
+  if (!mq.matches) return;
+
+  const stage = document.querySelector("[data-story-stage]");
+  if (!(stage instanceof HTMLElement)) return;
+
+  const cards = Array.from(stage.querySelectorAll("[data-story-card]"));
+  if (!cards.length) return;
+
+  let raf = 0;
+  const tick = () => {
+    raf = 0;
+    const r = stage.getBoundingClientRect();
+    const vh = Math.max(1, window.innerHeight);
+    // progress over the stage height (stage is tall)
+    const p = clamp01((vh * 0.65 - r.top) / Math.max(1, r.height - vh * 0.35));
+
+    // Drive spark intensity
+    document.documentElement.style.setProperty("--story-p", p.toFixed(4));
+
+    const t = p;
+    const c1 = cards[0];
+    const c2 = cards[1] || cards[0];
+    const c3 = cards[2] || cards[1] || cards[0];
+
+    const set = (el, x, y, s, rot, z) => {
+      el.style.zIndex = String(z);
+      el.style.transform = `translate3d(${x}px, ${y}px, 0) rotate(${rot}deg) scale(${s})`;
+    };
+
+    set(c1, lerp(-56, -10, t), lerp(22, -10, t), lerp(1.06, 1.0, t), lerp(-7, -1.2, t), 3);
+    set(c2, lerp(64, 16, t), lerp(56, 8, t), lerp(1.03, 0.98, t), lerp(6.8, 1.6, t), 2);
+    set(c3, lerp(-10, 0, t), lerp(122, 40, t), lerp(1.0, 0.96, t), lerp(-2.4, 1.4, t), 1);
+  };
+
+  const onScroll = () => {
+    if (!raf) raf = window.requestAnimationFrame(tick);
+  };
+
+  tick();
+  window.addEventListener("scroll", onScroll, { passive: true });
+  window.addEventListener("resize", onScroll, { passive: true });
+}
+
 document.addEventListener("DOMContentLoaded", async () => {
   setYear();
   const content = await loadContentJson();
@@ -863,6 +934,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   wireMailtoForm();
   wirePhotoUpload();
   wireLegalLinks();
+  wireScrollStory();
   wireScrollTop();
 });
 
