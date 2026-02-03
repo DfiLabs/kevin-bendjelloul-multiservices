@@ -900,7 +900,8 @@ function wireScrollStory() {
 
     const set = (el, x, y, s, rot, z) => {
       el.style.zIndex = String(z);
-      el.style.transform = `translate3d(${x}px, ${y}px, 0) rotate(${rot}deg) scale(${s})`;
+      // Keep the card centered, then apply our offsets.
+      el.style.transform = `translate3d(-50%, -50%, 0) translate3d(${x}px, ${y}px, 0) rotate(${rot}deg) scale(${s})`;
     };
 
     set(c1, lerp(-56, -10, t), lerp(22, -10, t), lerp(1.06, 1.0, t), lerp(-7, -1.2, t), 3);

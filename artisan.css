@@ -371,7 +371,8 @@ h1 {
   box-shadow: 0 22px 55px rgba(15, 12, 8, 0.14);
   border-radius: 20px 16px 22px 14px;
   padding: 10px 10px 14px;
-  transform: rotate(var(--r, -2deg));
+  transform: translate3d(0, var(--py, 0px), 0) rotate(var(--r, -2deg));
+  will-change: transform;
 }
 .polaroid img {
   width: 100%;
@@ -423,6 +424,8 @@ h1 {
   border-radius: 22px 18px 24px 16px;
   padding: 14px 14px;
   box-shadow: 0 18px 55px rgba(15, 12, 8, 0.10);
+  transform: translate3d(0, var(--py, 0px), 0);
+  will-change: transform;
 }
 .atelier-top {
   display: flex;
