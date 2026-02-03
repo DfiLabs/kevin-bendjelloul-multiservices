@@ -125,7 +125,7 @@ function applyContentJson(content) {
     const gallery = document.querySelector("[data-gallery]");
     if (gallery && Array.isArray(proof.gallery)) {
       gallery.innerHTML = "";
-      proof.gallery.slice(0, 12).forEach((g) => {
+      proof.gallery.slice(0, 6).forEach((g) => {
         if (!g || typeof g !== "object") return;
         const title = typeof g.title === "string" ? g.title : "";
         const location = typeof g.location === "string" ? g.location : "";
@@ -199,10 +199,19 @@ function applyContentJson(content) {
       shots.forEach((img) => {
         const idx = Number.parseInt(String(img.getAttribute("data-story-shot") || "0"), 10);
         const g = proof.gallery[idx];
-        if (!g || typeof g !== "object") return;
+        const card = img.closest("[data-story-card]");
+        if (!g || typeof g !== "object") {
+          if (card) card.setAttribute("hidden", "true");
+          return;
+        }
         const src = typeof g.src === "string" ? g.src : "";
         const alt = typeof g.alt === "string" && g.alt.trim() ? g.alt.trim() : typeof g.title === "string" ? g.title : "Réalisation";
-        if (src && src.trim()) img.src = src;
+        if (src && src.trim()) {
+          img.src = src;
+          if (card) card.removeAttribute("hidden");
+        } else if (card) {
+          card.setAttribute("hidden", "true");
+        }
         img.alt = alt;
       });
     }

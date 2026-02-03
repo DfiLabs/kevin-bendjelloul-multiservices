@@ -16,7 +16,7 @@
   "ctaReassurance": ["Devis clair", "Finitions soignées", "Chantier laissé propre"],
   "hero": {
     "subheadline": "Tous corps d’état à Béziers et dans l’Hérault - électricité, plomberie, maçonnerie, peinture, sols",
-    "photo": "https://images.pexels.com/photos/834892/pexels-photo-834892.jpeg?auto=compress&cs=tinysrgb&w=1600"
+    "photo": "https://images.pexels.com/photos/139311/pexels-photo-139311.jpeg?auto=compress&cs=tinysrgb&w=1600"
   },
   "serviceArea": {
     "primary": "Béziers",
@@ -32,46 +32,40 @@
     ],
     "gallery": [
       {
-        "title": "Planification",
+        "title": "Plan",
         "location": "Hérault",
         "src": "https://images.pexels.com/photos/834892/pexels-photo-834892.jpeg?auto=compress&cs=tinysrgb&w=1200",
         "alt": "Plan de rénovation sur table"
       },
       {
-        "title": "Peinture (rouleau)",
+        "title": "Peinture",
         "location": "Hérault",
         "src": "https://images.pexels.com/photos/5691631/pexels-photo-5691631.jpeg?auto=compress&cs=tinysrgb&w=1200",
         "alt": "Rouleau de peinture sur sol"
       },
       {
-        "title": "Outillage (détails)",
+        "title": "Préparation",
         "location": "Hérault",
-        "src": "https://images.pexels.com/photos/4270181/pexels-photo-4270181.jpeg?auto=compress&cs=tinysrgb&w=1200",
-        "alt": "Outil à main (détails)"
+        "src": "https://images.pexels.com/photos/5853932/pexels-photo-5853932.jpeg?auto=compress&cs=tinysrgb&w=1200",
+        "alt": "Outils de chantier sur établi"
       },
       {
-        "title": "Préparation support",
+        "title": "Support",
         "location": "Hérault",
         "src": "https://images.pexels.com/photos/7794439/pexels-photo-7794439.jpeg?auto=compress&cs=tinysrgb&w=1200",
         "alt": "Mur blanc avec fissure (état existant)"
       },
       {
-        "title": "Carrelage (détails)",
+        "title": "Carrelage",
         "location": "Hérault",
         "src": "https://images.pexels.com/photos/10793658/pexels-photo-10793658.jpeg?auto=compress&cs=tinysrgb&w=1200",
         "alt": "Gros plan sur des carreaux"
       },
       {
-        "title": "Sols (motifs)",
+        "title": "Sols",
         "location": "Hérault",
         "src": "https://images.pexels.com/photos/1652544/pexels-photo-1652544.jpeg?auto=compress&cs=tinysrgb&w=1200",
         "alt": "Motifs de carrelage au sol"
-      },
-      {
-        "title": "Bois & finitions",
-        "location": "Hérault",
-        "src": "https://images.pexels.com/photos/139311/pexels-photo-139311.jpeg?auto=compress&cs=tinysrgb&w=1200",
-        "alt": "Surface en bois (texture)"
       }
     ]
   },
