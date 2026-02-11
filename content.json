@@ -10,14 +10,39 @@
     "publishEmailInSchema": false,
     "whatsapp": {
       "enabled": true,
+      "phoneTel": "+33767647525",
       "message": "Bonjour, je souhaite un devis (multi-services). Zone: Béziers / Hérault. Mon besoin:"
     }
   },
-  "ctaReassurance": ["Devis clair", "Finitions soignées", "Chantier laissé propre"],
+  "ctaReassurance": ["Périmètre clair", "Finitions nettes", "Chantier propre"],
   "hero": {
     "subheadline": "Tous corps d’état à Béziers et dans l’Hérault - électricité, plomberie, maçonnerie, peinture, sols",
-    "photo": "https://images.pexels.com/photos/139311/pexels-photo-139311.jpeg?auto=compress&cs=tinysrgb&w=1600"
+    "photo": "https://images.pexels.com/photos/29539571/pexels-photo-29539571.jpeg?auto=compress&cs=tinysrgb&w=1600"
   },
+  "heroShots": [
+    {
+      "title": "Finitions",
+      "src": "https://images.pexels.com/photos/29539571/pexels-photo-29539571.jpeg?auto=compress&cs=tinysrgb&w=1200",
+      "alt": "Texture bois (détails)"
+    },
+    {
+      "title": "Mesures",
+      "src": "https://images.pexels.com/photos/30413398/pexels-photo-30413398.jpeg?auto=compress&cs=tinysrgb&w=1200",
+      "alt": "Mètre ruban sur chantier (gros plan)"
+    }
+  ],
+  "storyShots": [
+    {
+      "title": "Préparation",
+      "src": "https://images.pexels.com/photos/914913/pexels-photo-914913.jpeg?auto=compress&cs=tinysrgb&w=1200",
+      "alt": "Tournevis (détails)"
+    },
+    {
+      "title": "Matières",
+      "src": "https://images.pexels.com/photos/298723/pexels-photo-298723.jpeg?auto=compress&cs=tinysrgb&w=1200",
+      "alt": "Texture pierre (détails)"
+    }
+  ],
   "serviceArea": {
     "primary": "Béziers",
     "secondary": "Hérault (34)"

@@ -225,9 +225,21 @@ h1 {
 }
 
 .hero-inner {
-  grid-template-columns: 1.06fr 0.94fr;
-  gap: 26px;
-  align-items: center;
+  grid-template-columns: 1fr;
+  gap: 18px;
+  align-items: start;
+}
+
+.hero-copy {
+  max-width: 72ch;
+}
+
+.hero-actions {
+  margin-top: 16px;
+}
+
+.micro {
+  margin-top: 12px;
 }
 
 .hero-sub {
@@ -355,12 +367,14 @@ h1 {
 
 .hero-art {
   display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
   gap: 14px;
+  align-items: start;
 }
 
 .collage {
   position: relative;
-  min-height: 330px;
+  min-height: 290px;
 }
 
 .polaroid {
@@ -416,6 +430,22 @@ h1 {
   left: 14%;
   width: min(380px, 78%);
   --r: -0.6deg;
+}
+
+/* Scroll story: make it clearly different from the electric site */
+.story-sticky {
+  border-style: dashed;
+  border-width: 1px;
+  background: radial-gradient(840px 520px at 18% 16%, rgba(241, 181, 74, 0.16), transparent 60%),
+    radial-gradient(820px 520px at 82% 22%, rgba(62, 107, 85, 0.14), transparent 62%),
+    rgba(255, 255, 255, 0.34);
+}
+.story-card {
+  width: min(420px, 82%);
+  border-radius: 22px 14px 24px 16px;
+}
+.story-card img {
+  filter: saturate(1.02) contrast(1.03);
 }
 
 .atelier {

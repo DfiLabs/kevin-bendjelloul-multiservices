@@ -6,6 +6,7 @@ const CONFIG = {
   email: "kevin.benjelloul@gmail.com",
   publishEmailInSchema: false,
   whatsappEnabled: true,
+  whatsappTel: "+33767647525",
   whatsappMessage: "Bonjour, je souhaite un devis (multi-services). Zone: Béziers / Hérault. Mon besoin:",
 };
 
@@ -59,6 +60,7 @@ function applyContentJson(content) {
     if (typeof c.publishEmailInSchema === "boolean") CONFIG.publishEmailInSchema = c.publishEmailInSchema;
     if (c.whatsapp && typeof c.whatsapp === "object") {
       if (typeof c.whatsapp.enabled === "boolean") CONFIG.whatsappEnabled = c.whatsapp.enabled;
+      if (typeof c.whatsapp.phoneTel === "string") CONFIG.whatsappTel = c.whatsapp.phoneTel;
       if (typeof c.whatsapp.message === "string") CONFIG.whatsappMessage = c.whatsapp.message;
     }
   }
@@ -165,9 +167,31 @@ function applyContentJson(content) {
       });
     }
 
-    // Hero collage (artisan visual): reuse first gallery shots
+    // Hero collage (artisan visual)
     const collage = document.querySelector("[data-hero-collage]");
-    if (collage && Array.isArray(proof.gallery)) {
+    const heroShots = Array.isArray(content.heroShots) ? content.heroShots.filter((x) => x && typeof x === "object") : null;
+    if (collage && heroShots && heroShots.length) {
+      const figures = Array.from(collage.querySelectorAll("figure.polaroid"));
+      const shots = Array.from(collage.querySelectorAll("img[data-hero-shot]"));
+      shots.forEach((img) => {
+        const idx = Number.parseInt(String(img.getAttribute("data-hero-shot") || "0"), 10);
+        const g = heroShots[idx];
+        if (!g || typeof g !== "object") return;
+        const src = typeof g.src === "string" ? g.src : "";
+        const alt = typeof g.alt === "string" && g.alt.trim() ? g.alt.trim() : typeof g.title === "string" ? g.title : "Réalisation";
+        if (src && src.trim()) img.src = src;
+        img.alt = alt;
+        const fig = img.closest("figure");
+        const cap = fig ? fig.querySelector(".polaroid-cap") : null;
+        if (cap && typeof g.title === "string" && g.title.trim()) cap.textContent = g.title.trim();
+      });
+      figures.forEach((fig) => {
+        const img = fig.querySelector("img");
+        const hasSrc = img instanceof HTMLImageElement ? Boolean(img.getAttribute("src")) : false;
+        if (!hasSrc) fig.setAttribute("hidden", "true");
+        else fig.removeAttribute("hidden");
+      });
+    } else if (collage && Array.isArray(proof.gallery)) {
       const figures = Array.from(collage.querySelectorAll("figure.polaroid"));
       const shots = Array.from(collage.querySelectorAll("img[data-hero-shot]"));
       shots.forEach((img) => {
@@ -195,10 +219,11 @@ function applyContentJson(content) {
     // Scroll story shots (sticky stack): reuse first gallery shots
     const stage = document.querySelector("[data-story-stage]");
     if (stage && Array.isArray(proof.gallery)) {
+      const storyShots = Array.isArray(content.storyShots) ? content.storyShots.filter((x) => x && typeof x === "object") : null;
       const shots = Array.from(stage.querySelectorAll("img[data-story-shot]"));
       shots.forEach((img) => {
         const idx = Number.parseInt(String(img.getAttribute("data-story-shot") || "0"), 10);
-        const g = proof.gallery[idx];
+        const g = storyShots && storyShots[idx] ? storyShots[idx] : proof.gallery[idx];
         const card = img.closest("[data-story-card]");
         if (!g || typeof g !== "object") {
           if (card) card.setAttribute("hidden", "true");
@@ -284,7 +309,8 @@ function applyContactConfig() {
   });
 
   // WhatsApp links (optional)
-  const digits = CONFIG.phoneTel.replace(/[^\d+]/g, "").replace("+", "");
+  const waTel = String(CONFIG.whatsappTel || CONFIG.phoneTel || "");
+  const digits = waTel.replace(/[^\d+]/g, "").replace("+", "");
   const waUrl = `https://wa.me/${encodeURIComponent(digits)}?text=${encodeURIComponent(CONFIG.whatsappMessage || "")}`;
   $all("a[data-whatsapp-link]").forEach((a) => {
     if (!CONFIG.whatsappEnabled) {
@@ -903,19 +929,25 @@ function wireScrollStory() {
     document.documentElement.style.setProperty("--story-p", p.toFixed(4));
 
     const t = p;
-    const c1 = cards[0];
-    const c2 = cards[1] || cards[0];
-    const c3 = cards[2] || cards[1] || cards[0];
-
     const set = (el, x, y, s, rot, z) => {
       el.style.zIndex = String(z);
       // Keep the card centered, then apply our offsets.
       el.style.transform = `translate3d(-50%, -50%, 0) translate3d(${x}px, ${y}px, 0) rotate(${rot}deg) scale(${s})`;
     };
 
-    set(c1, lerp(-56, -10, t), lerp(22, -10, t), lerp(1.06, 1.0, t), lerp(-7, -1.2, t), 3);
-    set(c2, lerp(64, 16, t), lerp(56, 8, t), lerp(1.03, 0.98, t), lerp(6.8, 1.6, t), 2);
-    set(c3, lerp(-10, 0, t), lerp(122, 40, t), lerp(1.0, 0.96, t), lerp(-2.4, 1.4, t), 1);
+    if (cards.length === 1) {
+      set(cards[0], 0, 0, 1.0, 0, 1);
+    } else if (cards.length === 2) {
+      set(cards[0], lerp(-48, -10, t), lerp(18, -10, t), lerp(1.06, 1.0, t), lerp(-6.2, -1.2, t), 2);
+      set(cards[1], lerp(58, 14, t), lerp(56, 8, t), lerp(1.02, 0.98, t), lerp(6.2, 1.4, t), 1);
+    } else {
+      const c1 = cards[0];
+      const c2 = cards[1];
+      const c3 = cards[2];
+      set(c1, lerp(-56, -10, t), lerp(22, -10, t), lerp(1.06, 1.0, t), lerp(-7, -1.2, t), 3);
+      set(c2, lerp(64, 16, t), lerp(56, 8, t), lerp(1.03, 0.98, t), lerp(6.8, 1.6, t), 2);
+      set(c3, lerp(-10, 0, t), lerp(122, 40, t), lerp(1.0, 0.96, t), lerp(-2.4, 1.4, t), 1);
+    }
   };
 
   const onScroll = () => {
