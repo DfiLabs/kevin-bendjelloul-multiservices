@@ -138,7 +138,6 @@ function applyContentJson(content) {
 
         const card = document.createElement("div");
         card.className = "gallery-card";
-        card.setAttribute("data-parallax", "42");
         card.setAttribute("role", "button");
         card.setAttribute("tabindex", "0");
         card.setAttribute("aria-label", `Voir la réalisation: ${title || alt}`);

@@ -962,6 +962,9 @@ h1 {
   grid-template-rows: auto auto;
   background: rgba(255, 255, 255, 0.82);
   overflow: visible;
+  transform: none !important;
+  will-change: auto;
+  z-index: 0;
 }
 .gallery-media {
   min-height: 0;
@@ -973,6 +976,8 @@ h1 {
   display: grid;
   gap: 7px;
   padding-bottom: 16px;
+  position: relative;
+  z-index: 1;
 }
 .gallery-card {
   cursor: zoom-in;
