@@ -1,6 +1,6 @@
-# KB MultiServices (vitrine)
+# KVB Rénovation (vitrine)
 
-Vitrine statique pour **KB MultiServices** (multi-services bâtiment).
+Vitrine statique pour **KVB Rénovation** (multi-services bâtiment).
 
 ## URLs
 
@@ -44,7 +44,7 @@ Pour publier une modification:
 
 ```bash
 git add index.html content.json main.js styles.css artisan.css assets scripts CNAME .github .cursor README.md
-git commit -m "Update KB MultiServices site"
+git commit -m "Update KVB Rénovation site"
 git push origin main
 ```
 

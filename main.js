@@ -750,42 +750,15 @@ function wireTilt() {
 }
 
 function wireMailtoForm() {
-  const form = $("[data-mailto-form]");
+  const form = $("[data-contact-form]");
   if (!(form instanceof HTMLFormElement)) return;
 
-  form.addEventListener("submit", (e) => {
-    e.preventDefault();
-    const fd = new FormData(form);
-    const name = String(fd.get("name") || "").trim();
-    const phone = String(fd.get("phone") || "").trim();
-    const email = String(fd.get("email") || "").trim();
-    const message = String(fd.get("message") || "").trim();
+  form.action = `https://formsubmit.co/${CONFIG.email}`;
+  form.method = "POST";
+  form.enctype = "multipart/form-data";
 
-    const subject = `Demande de devis - ${name || "Client"}`;
-    const photoInput = form.querySelector("[data-photo-input]");
-    const files = photoInput instanceof HTMLInputElement && photoInput.files ? Array.from(photoInput.files) : [];
-    const lines = [
-      "Bonjour,",
-      "",
-      "Je souhaite un devis / une intervention :",
-      "",
-      message,
-      "",
-      files.length ? `Photos: ${files.length} fichier(s) (à joindre en pièces jointes)` : "Photos: aucune",
-      "",
-      "---",
-      `Nom: ${name}`,
-      `Téléphone: ${phone}`,
-      `Email: ${email}`,
-      `Page: ${location.href}`,
-    ];
-
-    const href = `mailto:${CONFIG.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(
-      lines.join("\n")
-    )}`;
-
-    window.location.href = href;
-    showToast(files.length ? "Messagerie ouverte. Ajoutez les photos en pièces jointes." : "Ouverture de la messagerie…");
+  form.addEventListener("submit", () => {
+    showToast("Envoi de la demande…");
   });
 }
 

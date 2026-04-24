@@ -1,9 +1,9 @@
-## Publishing checklist (KB MultiServices)
+## Publishing checklist (KVB Rénovation)
 
 ### Contact
 - [ ] Téléphone correct (tap-to-call OK sur mobile)
 - [ ] WhatsApp OK (ouvre le bon chat + message pré-rempli)
-- [ ] Email OK (le formulaire `mailto:` ouvre avec le bon `to:`)
+- [ ] Formulaire OK (envoi FormSubmit + confirmation initiale si demandée)
 
 ### Services
 - [ ] Les services listés sont bien ceux que vous voulez afficher (multi-services)

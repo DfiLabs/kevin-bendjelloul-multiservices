@@ -1,6 +1,6 @@
 {
   "brand": {
-    "name": "KB MultiServices",
+    "name": "KVB Rénovation",
     "subtitle": "Multi-services bâtiment - Béziers & Hérault (34)"
   },
   "contact": {
@@ -14,7 +14,7 @@
       "message": "Bonjour, je souhaite un devis (multi-services). Zone: Béziers / Hérault. Mon besoin:"
     }
   },
-  "ctaReassurance": ["Périmètre clair", "Finitions nettes", "Chantier propre"],
+  "ctaReassurance": ["Réponse sous 24h ouvrées", "Devis gratuit", "Béziers + 30 km"],
   "hero": {
     "subheadline": "Rénovation, dépannage et finitions à Béziers et dans l’Hérault. Un chantier clair, propre, bien fini.",
     "photo": "https://images.pexels.com/photos/29539571/pexels-photo-29539571.jpeg?auto=compress&cs=tinysrgb&w=1600"
@@ -125,51 +125,51 @@
     {
       "id": "electricite",
       "title": "Électricité",
-      "examples": ["Tableau / disjoncteurs", "Prises & éclairage", "Mise en sécurité (selon cas)"],
+      "examples": ["Dépannage et recherche de panne", "Prises, éclairage, tableau", "Mise en sécurité selon le cas"],
       "turnaround": "Selon urgence / chantier",
-      "fromPrice": "À partir de: sur devis"
+      "fromPrice": "Devis selon accès et état initial"
     },
     {
       "id": "plomberie",
       "title": "Plomberie",
-      "examples": ["Remplacement robinetterie", "Raccordements", "Recherche de fuite (selon cas)"],
+      "examples": ["Remplacement robinetterie", "Raccordements propres", "Recherche de fuite selon le cas"],
       "turnaround": "Selon urgence / accès",
-      "fromPrice": "À partir de: sur devis"
+      "fromPrice": "Prix cadré après photos ou visite"
     },
     {
       "id": "maconnerie",
       "title": "Maçonnerie",
-      "examples": ["Rebouchages / reprises", "Petits scellements", "Réparations (selon chantier)"],
+      "examples": ["Rebouchages et reprises", "Petits scellements", "Réparations selon chantier"],
       "turnaround": "Selon chantier",
-      "fromPrice": "À partir de: sur devis"
+      "fromPrice": "Devis selon support et surface"
     },
     {
       "id": "peinture",
       "title": "Peinture & enduits",
-      "examples": ["Préparation supports", "Rebouchage / lissage", "Finitions nettes"],
+      "examples": ["Supports préparés", "Rebouchage et lissage", "Pièces livrées propres"],
       "turnaround": "Sous 1-2 semaines (selon surface)",
-      "fromPrice": "À partir de: sur devis"
+      "fromPrice": "Selon surface et état des murs"
     },
     {
       "id": "sols",
       "title": "Sols & carrelage",
-      "examples": ["Dépose / préparation", "Pose (selon cas)", "Plinthes / finitions"],
+      "examples": ["Dépose et préparation", "Pose selon le support", "Plinthes et finitions"],
       "turnaround": "Sous 2-7 jours (selon planning)",
-      "fromPrice": "À partir de: sur devis"
+      "fromPrice": "Selon surface et matériau"
     },
     {
       "id": "finitions",
       "title": "Pose & finitions",
-      "examples": ["Montage / fixations", "Plinthes / joints", "Retouches & ajustements"],
+      "examples": ["Montage et fixations", "Plinthes et joints", "Retouches et ajustements"],
       "turnaround": "Sous 2-7 jours (selon planning)",
-      "fromPrice": "À partir de: sur devis"
+      "fromPrice": "Forfait ou devis selon liste"
     },
     {
       "id": "nettoyage",
       "title": "Nettoyage fin de chantier",
       "examples": ["Remise au propre", "Évacuation légère (selon cas)", "Résultat net"],
       "turnaround": "Selon chantier",
-      "fromPrice": "À partir de: sur devis"
+      "fromPrice": "Selon volume et accès"
     }
   ],
   "legal": {

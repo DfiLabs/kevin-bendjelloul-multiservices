@@ -1,27 +1,26 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="KB MultiServices">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="KVB Rénovation">
   <defs>
-    <linearGradient id="bg" x1="12" y1="8" x2="54" y2="58" gradientUnits="userSpaceOnUse">
-      <stop stop-color="#2a211b" />
-      <stop offset="1" stop-color="#120f0c" />
+    <linearGradient id="paper" x1="12" y1="7" x2="54" y2="58" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#fff8ea" />
+      <stop offset="1" stop-color="#efe2cf" />
     </linearGradient>
-    <linearGradient id="gold" x1="12" y1="9" x2="52" y2="56" gradientUnits="userSpaceOnUse">
-      <stop stop-color="#f0d89a" />
-      <stop offset="0.55" stop-color="#c8a96e" />
-      <stop offset="1" stop-color="#8f6d3a" />
+    <linearGradient id="terracotta" x1="10" y1="10" x2="54" y2="54" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#cf7a4f" />
+      <stop offset="1" stop-color="#9f4a2b" />
     </linearGradient>
   </defs>
-  <rect x="5" y="5" width="54" height="54" rx="19" fill="url(#bg)" />
-  <rect x="9" y="9" width="46" height="46" rx="15" fill="none" stroke="url(#gold)" stroke-width="2" />
-  <path d="M18 47h28" stroke="url(#gold)" stroke-width="2.2" stroke-linecap="round" opacity="0.95" />
+  <circle cx="32" cy="32" r="27" fill="url(#paper)" />
+  <circle cx="32" cy="32" r="22.5" fill="none" stroke="url(#terracotta)" stroke-width="2.4" />
+  <path d="M18 45h28" stroke="#b6643d" stroke-width="2.2" stroke-linecap="round" />
   <text
     x="32"
-    y="39"
+    y="37"
     text-anchor="middle"
-    font-family="Georgia, 'Iowan Old Style', serif"
-    font-size="25"
-    font-weight="700"
-    letter-spacing="-2.2"
-    fill="#fff8ea"
-  >KB</text>
-  <circle cx="48" cy="16" r="2.1" fill="#d7b979" />
+    font-family="Inter, ui-sans-serif, system-ui, sans-serif"
+    font-size="21"
+    font-weight="850"
+    letter-spacing="-1.8"
+    fill="#1f1712"
+  >KVB</text>
+  <path d="M17 20h30" stroke="#b6643d" stroke-width="1.6" stroke-linecap="round" opacity="0.7" />
 </svg>
