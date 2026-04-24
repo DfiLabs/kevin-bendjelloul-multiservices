@@ -1,42 +1,32 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="KB MultiServices logo">
   <defs>
-    <filter id="shadow" x="-25%" y="-25%" width="150%" height="150%">
-      <feDropShadow dx="0" dy="10" stdDeviation="10" flood-color="#0b0a07" flood-opacity="0.18" />
+    <linearGradient id="bg" x1="12" y1="8" x2="54" y2="58" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#2a211b" />
+      <stop offset="1" stop-color="#120f0c" />
+    </linearGradient>
+    <linearGradient id="gold" x1="12" y1="9" x2="52" y2="56" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#f0d89a" />
+      <stop offset="0.55" stop-color="#c8a96e" />
+      <stop offset="1" stop-color="#8f6d3a" />
+    </linearGradient>
+    <filter id="shadow" x="-30%" y="-30%" width="160%" height="160%">
+      <feDropShadow dx="0" dy="12" stdDeviation="10" flood-color="#0b0a07" flood-opacity="0.28" />
     </filter>
   </defs>
 
-  <!-- Paper stamp -->
-  <rect x="6" y="6" width="52" height="52" rx="18" fill="#fbf9f3" filter="url(#shadow)" />
-  <rect x="10" y="10" width="44" height="44" rx="14" fill="none" stroke="#14110c" stroke-opacity="0.22" stroke-width="2" />
+  <rect x="5" y="5" width="54" height="54" rx="19" fill="url(#bg)" filter="url(#shadow)" />
+  <rect x="9" y="9" width="46" height="46" rx="15" fill="none" stroke="url(#gold)" stroke-width="2" />
+  <path d="M18 47h28" stroke="url(#gold)" stroke-width="2.2" stroke-linecap="round" opacity="0.95" />
 
-  <!-- Monogram (hand-drawn strokes) -->
-  <path d="M22 19v26" stroke="#14110c" stroke-width="3.4" stroke-linecap="round" />
-  <path d="M22 32l12-13" stroke="#14110c" stroke-width="3.4" stroke-linecap="round" />
-  <path d="M22 32l12 13" stroke="#14110c" stroke-width="3.4" stroke-linecap="round" />
-
-  <path d="M39 19v26" stroke="#14110c" stroke-width="3.4" stroke-linecap="round" />
-  <path
-    d="M39 19h6.5c3 0 5.5 2.2 5.5 5s-2.5 5-5.5 5H39"
-    fill="none"
-    stroke="#14110c"
-    stroke-width="3.4"
-    stroke-linecap="round"
-    stroke-linejoin="round"
-  />
-  <path
-    d="M39 32h7c3.1 0 5.7 2.3 5.7 5.2S49.1 43 46 43h-7"
-    fill="none"
-    stroke="#14110c"
-    stroke-width="3.4"
-    stroke-linecap="round"
-    stroke-linejoin="round"
-  />
-
-  <!-- Small “spark” for multi-services -->
-  <path
-    d="M14.5 18.5l1.6.6.6 1.6.6-1.6 1.6-.6-1.6-.6-.6-1.6-.6 1.6-1.6.6Z"
-    fill="#f1b54a"
-    fill-opacity="0.95"
-  />
+  <text
+    x="32"
+    y="39"
+    text-anchor="middle"
+    font-family="Georgia, 'Iowan Old Style', serif"
+    font-size="25"
+    font-weight="700"
+    letter-spacing="-2.2"
+    fill="#fff8ea"
+  >KB</text>
+  <circle cx="48" cy="16" r="2.1" fill="#d7b979" />
 </svg>
-
