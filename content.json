@@ -21,26 +21,26 @@
   },
   "heroShots": [
     {
-      "title": "Finitions",
-      "src": "https://images.pexels.com/photos/29539571/pexels-photo-29539571.jpeg?auto=compress&cs=tinysrgb&w=1200",
-      "alt": "Texture bois (détails)"
+      "title": "Clemenceau",
+      "src": "./assets/realisations/clemenceau-salon-terrasse.jpg",
+      "alt": "Salon rénové avec terrasse à Béziers"
     },
     {
-      "title": "Mesures",
-      "src": "https://images.pexels.com/photos/30413398/pexels-photo-30413398.jpeg?auto=compress&cs=tinysrgb&w=1200",
-      "alt": "Mètre ruban sur chantier (gros plan)"
+      "title": "Cuisine",
+      "src": "./assets/realisations/clemenceau-cuisine.jpg",
+      "alt": "Cuisine sous combles rénovée à Béziers"
     }
   ],
   "storyShots": [
     {
-      "title": "Préparation",
-      "src": "https://images.pexels.com/photos/914913/pexels-photo-914913.jpeg?auto=compress&cs=tinysrgb&w=1200",
-      "alt": "Tournevis (détails)"
+      "title": "Terrasse",
+      "src": "./assets/realisations/clemenceau-terrasse.jpg",
+      "alt": "Terrasse avec vue sur les toits de Béziers"
     },
     {
-      "title": "Matières",
-      "src": "https://images.pexels.com/photos/298723/pexels-photo-298723.jpeg?auto=compress&cs=tinysrgb&w=1200",
-      "alt": "Texture pierre (détails)"
+      "title": "Salle d’eau",
+      "src": "./assets/realisations/clemenceau-douche.jpg",
+      "alt": "Salle d’eau rénovée avec douche"
     }
   ],
   "serviceArea": {
@@ -57,40 +57,67 @@
     ],
     "gallery": [
       {
-        "title": "Plan",
-        "location": "Hérault",
-        "src": "https://images.pexels.com/photos/834892/pexels-photo-834892.jpeg?auto=compress&cs=tinysrgb&w=1200",
-        "alt": "Plan de rénovation sur table"
+        "title": "Salon & terrasse",
+        "location": "117 avenue Clemenceau, Béziers",
+        "src": "./assets/realisations/clemenceau-salon-terrasse.jpg",
+        "alt": "Salon rénové sous combles avec porte ouverte sur terrasse",
+        "credit": "Photo: © Alain Reynaud"
       },
       {
-        "title": "Peinture",
-        "location": "Hérault",
-        "src": "https://images.pexels.com/photos/5691631/pexels-photo-5691631.jpeg?auto=compress&cs=tinysrgb&w=1200",
-        "alt": "Rouleau de peinture sur sol"
+        "title": "Cuisine ouverte",
+        "location": "Béziers centre",
+        "src": "./assets/realisations/clemenceau-salon-cuisine.jpg",
+        "alt": "Salon avec cuisine ouverte sous plafond bois",
+        "credit": "Photo: © Alain Reynaud"
       },
       {
-        "title": "Préparation",
-        "location": "Hérault",
-        "src": "https://images.pexels.com/photos/5853932/pexels-photo-5853932.jpeg?auto=compress&cs=tinysrgb&w=1200",
-        "alt": "Outils de chantier sur établi"
+        "title": "Cuisine équipée",
+        "location": "Clemenceau",
+        "src": "./assets/realisations/clemenceau-cuisine.jpg",
+        "alt": "Cuisine vert sauge avec plan bois et crédence carrelée",
+        "credit": "Photo: © Alain Reynaud"
       },
       {
-        "title": "Support",
-        "location": "Hérault",
-        "src": "https://images.pexels.com/photos/7794439/pexels-photo-7794439.jpeg?auto=compress&cs=tinysrgb&w=1200",
-        "alt": "Mur blanc avec fissure (état existant)"
+        "title": "Coin repas",
+        "location": "Béziers",
+        "src": "./assets/realisations/clemenceau-cuisine-detail.jpg",
+        "alt": "Coin repas et cuisine avec accès terrasse",
+        "credit": "Photo: © Alain Reynaud"
       },
       {
-        "title": "Carrelage",
-        "location": "Hérault",
-        "src": "https://images.pexels.com/photos/10793658/pexels-photo-10793658.jpeg?auto=compress&cs=tinysrgb&w=1200",
-        "alt": "Gros plan sur des carreaux"
+        "title": "Terrasse",
+        "location": "Vue sur les toits",
+        "src": "./assets/realisations/clemenceau-terrasse.jpg",
+        "alt": "Terrasse lumineuse avec mobilier extérieur",
+        "credit": "Photo: © Alain Reynaud"
       },
       {
-        "title": "Sols",
-        "location": "Hérault",
-        "src": "https://images.pexels.com/photos/1652544/pexels-photo-1652544.jpeg?auto=compress&cs=tinysrgb&w=1200",
-        "alt": "Motifs de carrelage au sol"
+        "title": "Vue dégagée",
+        "location": "Béziers",
+        "src": "./assets/realisations/clemenceau-vue-toits.jpg",
+        "alt": "Vue dégagée depuis les toits de Béziers",
+        "credit": "Photo: © Alain Reynaud"
+      },
+      {
+        "title": "Salle d’eau",
+        "location": "Clemenceau",
+        "src": "./assets/realisations/clemenceau-salle-eau.jpg",
+        "alt": "Salle d’eau compacte avec vasque et miroir",
+        "credit": "Photo: © Alain Reynaud"
+      },
+      {
+        "title": "Douche",
+        "location": "Béziers",
+        "src": "./assets/realisations/clemenceau-douche.jpg",
+        "alt": "Douche et meuble vasque dans salle d’eau rénovée",
+        "credit": "Photo: © Alain Reynaud"
+      },
+      {
+        "title": "Coin nuit",
+        "location": "Sous combles",
+        "src": "./assets/realisations/clemenceau-chambre.jpg",
+        "alt": "Coin nuit sous pente avec poutres apparentes",
+        "credit": "Photo: © Alain Reynaud"
       }
     ]
   },

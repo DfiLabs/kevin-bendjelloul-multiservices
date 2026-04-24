@@ -127,16 +127,25 @@ function applyContentJson(content) {
     const gallery = document.querySelector("[data-gallery]");
     if (gallery && Array.isArray(proof.gallery)) {
       gallery.innerHTML = "";
-      proof.gallery.slice(0, 6).forEach((g) => {
+      proof.gallery.slice(0, 12).forEach((g) => {
         if (!g || typeof g !== "object") return;
         const title = typeof g.title === "string" ? g.title : "";
         const location = typeof g.location === "string" ? g.location : "";
         const src = typeof g.src === "string" ? g.src : "";
+        const fullSrc = typeof g.fullSrc === "string" && g.fullSrc.trim() ? g.fullSrc : src;
+        const credit = typeof g.credit === "string" ? g.credit : "";
         const alt = typeof g.alt === "string" ? g.alt : title || "Réalisation";
 
         const card = document.createElement("div");
         card.className = "gallery-card";
         card.setAttribute("data-parallax", "42");
+        card.setAttribute("role", "button");
+        card.setAttribute("tabindex", "0");
+        card.setAttribute("aria-label", `Voir la réalisation: ${title || alt}`);
+        if (fullSrc && fullSrc.trim()) card.setAttribute("data-full-src", fullSrc);
+        if (title) card.setAttribute("data-title", title);
+        if (location) card.setAttribute("data-location", location);
+        if (credit) card.setAttribute("data-credit", credit);
 
         const media = document.createElement("div");
         media.className = "gallery-media";
@@ -158,8 +167,16 @@ function applyContentJson(content) {
         const loc = document.createElement("div");
         loc.className = "gallery-loc";
         loc.textContent = location || "";
+        const c = document.createElement("div");
+        c.className = "gallery-credit";
+        c.textContent = credit || "";
+        const hint = document.createElement("div");
+        hint.className = "gallery-open";
+        hint.textContent = "Agrandir";
         body.appendChild(t);
         body.appendChild(loc);
+        if (credit) body.appendChild(c);
+        body.appendChild(hint);
 
         card.appendChild(media);
         card.appendChild(body);
@@ -896,6 +913,77 @@ function wireScrollTop() {
   });
 }
 
+function wireGalleryLightbox() {
+  const cards = $all(".gallery-card[data-full-src]");
+  if (!cards.length) return;
+
+  const modal = document.createElement("div");
+  modal.className = "gallery-lightbox";
+  modal.setAttribute("role", "dialog");
+  modal.setAttribute("aria-modal", "true");
+  modal.setAttribute("aria-label", "Photo de réalisation");
+  modal.setAttribute("hidden", "true");
+  modal.innerHTML = `
+    <button class="gallery-lightbox-close" type="button" aria-label="Fermer">Fermer</button>
+    <div class="gallery-lightbox-frame">
+      <img class="gallery-lightbox-img" alt="" />
+      <div class="gallery-lightbox-caption">
+        <div>
+          <div class="gallery-lightbox-title"></div>
+          <div class="gallery-lightbox-location"></div>
+        </div>
+        <div class="gallery-lightbox-credit"></div>
+      </div>
+    </div>
+  `;
+  document.body.appendChild(modal);
+
+  const img = modal.querySelector(".gallery-lightbox-img");
+  const titleEl = modal.querySelector(".gallery-lightbox-title");
+  const locationEl = modal.querySelector(".gallery-lightbox-location");
+  const creditEl = modal.querySelector(".gallery-lightbox-credit");
+  const closeBtn = modal.querySelector(".gallery-lightbox-close");
+
+  const close = () => {
+    modal.setAttribute("hidden", "true");
+    document.body.classList.remove("lightbox-open");
+  };
+
+  const open = (card) => {
+    if (!(card instanceof HTMLElement) || !(img instanceof HTMLImageElement)) return;
+    const src = card.getAttribute("data-full-src") || "";
+    if (!src) return;
+    const title = card.getAttribute("data-title") || "Réalisation";
+    const location = card.getAttribute("data-location") || "";
+    const credit = card.getAttribute("data-credit") || "";
+    img.src = src;
+    img.alt = title;
+    if (titleEl) titleEl.textContent = title;
+    if (locationEl) locationEl.textContent = location;
+    if (creditEl) creditEl.textContent = credit;
+    modal.removeAttribute("hidden");
+    document.body.classList.add("lightbox-open");
+    if (closeBtn instanceof HTMLElement) closeBtn.focus();
+  };
+
+  cards.forEach((card) => {
+    card.addEventListener("click", () => open(card));
+    card.addEventListener("keydown", (e) => {
+      if (e.key === "Enter" || e.key === " ") {
+        e.preventDefault();
+        open(card);
+      }
+    });
+  });
+
+  modal.addEventListener("click", (e) => {
+    if (e.target === modal || e.target === closeBtn) close();
+  });
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && !modal.hasAttribute("hidden")) close();
+  });
+}
+
 function clamp01(x) {
   return Math.max(0, Math.min(1, x));
 }
@@ -977,6 +1065,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   wirePhotoUpload();
   wireLegalLinks();
   wireScrollStory();
+  wireGalleryLightbox();
   wireScrollTop();
 });
 
