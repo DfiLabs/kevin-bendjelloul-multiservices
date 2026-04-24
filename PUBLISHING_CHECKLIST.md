@@ -28,4 +28,11 @@
 - [ ] Zone OK (Béziers + Hérault)
 - [ ] FAQ cohérente avec la page
 - [ ] Aucune adresse email affichée en clair
+- [ ] `CNAME`, canonical, Open Graph et JSON-LD pointent vers `https://kvb-renovation.fr/`
+
+### Domaine / GitHub Pages
+- [ ] GitHub Pages source: branche `main`, dossier `/`
+- [ ] Domaine personnalisé GitHub Pages: `kvb-renovation.fr`
+- [ ] DNS OVH configuré pour GitHub Pages (`A` apex + `CNAME www`)
+- [ ] HTTPS forcé après validation DNS
 

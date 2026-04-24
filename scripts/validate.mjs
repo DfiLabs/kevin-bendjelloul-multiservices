@@ -5,6 +5,8 @@ import { dirname, join } from "node:path";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 const root = join(__dirname, "..");
+const productionOrigin = "https://kvb-renovation.fr";
+const productionUrl = `${productionOrigin}/`;
 
 async function readText(rel) {
   return await readFile(join(root, rel), "utf8");
@@ -44,10 +46,11 @@ function assertHasContentJson(content) {
   if (!String(c.email || "").includes("@")) fail("content.json contact.email invalid");
 }
 
-const [indexHtml, mainJs, contentJsonRaw] = await Promise.all([
+const [indexHtml, mainJs, contentJsonRaw, cnameRaw] = await Promise.all([
   readText("index.html"),
   readText("main.js"),
   readText("content.json"),
+  readText("CNAME"),
 ]);
 
 assertNoPlaceholders(indexHtml, "index.html");
@@ -63,11 +66,19 @@ try {
 assertHasContentJson(content);
 assertEmailNotVisible(indexHtml, content?.contact?.email);
 
+if (cnameRaw.trim() !== "kvb-renovation.fr") fail("CNAME must point to kvb-renovation.fr");
+if (!indexHtml.includes(`<link rel="canonical" href="${productionUrl}" />`)) fail("Missing production canonical URL");
+if (!indexHtml.includes(`<meta property="og:url" content="${productionUrl}" />`)) fail("Missing production og:url");
+
 // JSON-LD: do not publish email unless explicitly enabled
 if (content?.contact?.publishEmailInSchema === false) {
   const blocks = extractJsonLdBlocks(indexHtml);
   const hasEmailKey = blocks.some((b) => /"email"\s*:/.test(b));
   if (hasEmailKey) fail("index.html contains JSON-LD email but publishEmailInSchema is false");
+}
+
+if (!extractJsonLdBlocks(indexHtml).some((b) => b.includes(`"url": "${productionUrl}"`))) {
+  fail("Missing production URL in JSON-LD");
 }
 
 // CTA sanity

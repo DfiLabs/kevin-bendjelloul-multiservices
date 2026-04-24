@@ -1,0 +1,12 @@
+---
+description: Project context for the KB MultiServices static site
+alwaysApply: true
+---
+
+# KB MultiServices Site
+
+- This is a static GitHub Pages site for KB MultiServices, served from the repository root.
+- Production domain is `https://kvb-renovation.fr/`; keep `CNAME`, canonical URL, Open Graph URL, and JSON-LD URL aligned.
+- Edit business content in `content.json` when possible; `main.js` loads it at runtime.
+- Keep contact privacy behavior intact: the email may be used by `mailto:` flows, but should not be visibly printed in `index.html` or JSON-LD unless `publishEmailInSchema` is explicitly changed.
+- Run `node ./scripts/validate.mjs` after changes that touch HTML, content, JavaScript, deployment, or SEO metadata.
