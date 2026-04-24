@@ -243,11 +243,13 @@ body::after {
   box-shadow: 0 22px 55px rgba(9, 20, 40, 0.12);
   display: grid;
   place-items: center;
+  overflow: hidden;
 }
 .brand-logo {
   width: 40px;
   height: 40px;
   display: block;
+  object-fit: cover;
 }
 
 .brand-text {
