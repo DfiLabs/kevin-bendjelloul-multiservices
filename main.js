@@ -511,8 +511,29 @@ function wireElementParallax() {
   const prefersReduced = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   if (prefersReduced) return;
 
-  // Only enable the heavy parallax on desktop for a real "wow"
-  const mq = window.matchMedia("(min-width: 900px)");
+  // Keep gallery cards fixed; parallax on grid items caused controls to overlap while scrolling.
+  const parallaxGroups = [
+    [".case-study", [12]],
+    ["#services .card", [8, 16, 10, 18, 9, 15, 11, 14]],
+    ["#process .step", [8, 14, 10, 16]],
+    [".commitment-card", [9, 16, 12, 18]],
+    [".about-panel", [12]],
+    ["#faq", [8]],
+    [".contact-card", [10]],
+    [".form", [16]],
+  ];
+
+  parallaxGroups.forEach(([selector, strengths]) => {
+    const values = Array.isArray(strengths) ? strengths : [strengths];
+    $all(selector).forEach((el, index) => {
+      if (!(el instanceof HTMLElement) || el.classList.contains("gallery-card")) return;
+      if (!el.hasAttribute("data-parallax")) el.setAttribute("data-parallax", String(values[index % values.length]));
+      el.classList.add("parallax-lift");
+    });
+  });
+
+  // Keep layout-affecting movement to tablet/desktop; the global glow still moves on mobile.
+  const mq = window.matchMedia("(min-width: 760px)");
   if (!mq.matches) return;
 
   const elements = Array.from(document.querySelectorAll("[data-parallax]"));

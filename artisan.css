@@ -914,13 +914,70 @@ h1 {
 
 /* Second pass: remove scroll dead zones, restore light rhythm, and make content fail-open. */
 .scroll-story {
-  display: none;
+  display: block;
+  margin-top: -16px;
+  padding: 0 0 34px;
+}
+.story-stage {
+  height: min(1040px, 115svh);
+  min-height: 620px;
+}
+.story-sticky {
+  top: 92px;
+  height: min(520px, calc(100svh - 132px));
+}
+.story-card {
+  box-shadow: 0 32px 90px rgba(15, 12, 8, 0.22);
+}
+.story-card.c1 {
+  width: min(560px, 86%);
+}
+.story-card.c2 {
+  width: min(480px, 78%);
+}
+.parallax-lift {
+  transform: translate3d(0, var(--py, 0px), 0);
+  will-change: transform;
+}
+.card.parallax-lift {
+  transform: translate3d(0, var(--py, 0px), 0) perspective(900px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg)) translateZ(0);
+}
+.about-panel.parallax-lift {
+  transform: translate3d(0, var(--py, 0px), 0) perspective(900px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg)) translateZ(0);
+}
+@media (max-width: 900px) {
+  .scroll-story {
+    display: none;
+  }
+}
+@media (max-width: 759px), (prefers-reduced-motion: reduce) {
+  .parallax-lift,
+  .card.parallax-lift,
+  .about-panel.parallax-lift {
+    transform: none;
+    will-change: auto;
+  }
 }
 
 .reveal {
   opacity: 1;
   transform: none;
   filter: none;
+}
+.reveal.parallax-lift {
+  transform: translate3d(0, var(--py, 0px), 0);
+}
+.card.reveal.parallax-lift,
+.about-panel.reveal.parallax-lift {
+  transform: translate3d(0, var(--py, 0px), 0) perspective(900px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg)) translateZ(0);
+}
+@media (max-width: 759px), (prefers-reduced-motion: reduce) {
+  .reveal.parallax-lift,
+  .card.reveal.parallax-lift,
+  .about-panel.reveal.parallax-lift {
+    transform: none;
+    will-change: auto;
+  }
 }
 
 .band-proof,
