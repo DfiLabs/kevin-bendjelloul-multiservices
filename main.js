@@ -485,10 +485,9 @@ function wireHeroParallax() {
     const r = hero.getBoundingClientRect();
     const vh = Math.max(1, window.innerHeight);
     const progress = Math.min(1, Math.max(0, -r.top / Math.max(1, r.height * 0.72)));
-    const eased = progress * (2 - progress);
-    const offset = Math.round(eased * 30);
+    const offset = Math.round(progress * 34);
     document.documentElement.style.setProperty("--hero-parallax", `${offset}px`);
-    document.documentElement.style.setProperty("--hero-progress", eased.toFixed(4));
+    document.documentElement.style.setProperty("--hero-progress", progress.toFixed(4));
   };
 
   onScroll();
@@ -567,16 +566,27 @@ function wireScrollWowGlow() {
     const maxScroll = Math.max(1, doc.scrollHeight - vh);
     const p = Math.max(0, Math.min(1, window.scrollY / maxScroll));
 
-    const y = Math.round(10 + p * 54); // 10%..64%
-    const wave = Math.sin(p * Math.PI);
-    const x = Math.round(50 + wave * 9); // subtle side drift only
+    // Move glow down + side-to-side as you scroll (more visible on desktop)
+    const y = Math.round(12 + p * 72); // 12%..84%
+    const wave = Math.sin(p * Math.PI * 2);
+    const x = Math.round(50 + wave * 28); // 22%..78%
     doc.style.setProperty("--scroll-glow-x", `${x}%`);
     doc.style.setProperty("--scroll-glow-y", `${y}%`);
     doc.style.setProperty("--wow-x", `${x}%`);
     doc.style.setProperty("--wow-y", `${y}%`);
-    doc.style.setProperty("--sheen-x", `${Math.round(-90 + p * 40)}%`);
-    doc.style.setProperty("--wow-rot", `${Math.round(p * 12)}deg`);
-    doc.style.setProperty("--grid-y", `${Math.round(p * 70)}px`);
+
+    // Extra "wow": a sheen sweep that moves as you scroll
+    // (CSS uses --sheen-x to translate a highlight across cards)
+    const loops = 3; // number of sweeps from top to bottom
+    const t = (p * loops) % 1; // 0..1 repeating
+    const sheenX = Math.round(-120 + t * 260); // -120%..140%
+    doc.style.setProperty("--sheen-x", `${sheenX}%`);
+
+    // Subtle rotation for the glow layer
+    doc.style.setProperty("--wow-rot", `${Math.round(p * 360)}deg`);
+
+    // Slight background stripe drift (used by CSS as background-position)
+    doc.style.setProperty("--grid-y", `${Math.round(p * 180)}px`);
   };
 
   set();
