@@ -483,11 +483,11 @@ function wireHeroParallax() {
   const onScroll = () => {
     raf = 0;
     const r = hero.getBoundingClientRect();
-    // Only parallax while hero is near viewport
     const vh = Math.max(1, window.innerHeight);
-    const progress = Math.min(1, Math.max(0, (vh - r.top) / (vh + r.height)));
-    const offset = Math.round((progress - 0.5) * 30); // -15..+15px
+    const progress = Math.min(1, Math.max(0, -r.top / Math.max(1, r.height * 0.72)));
+    const offset = Math.round(progress * 34);
     document.documentElement.style.setProperty("--hero-parallax", `${offset}px`);
+    document.documentElement.style.setProperty("--hero-progress", progress.toFixed(4));
   };
 
   onScroll();
@@ -511,29 +511,8 @@ function wireElementParallax() {
   const prefersReduced = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   if (prefersReduced) return;
 
-  // Keep gallery cards fixed; parallax on grid items caused controls to overlap while scrolling.
-  const parallaxGroups = [
-    [".case-study", [12]],
-    ["#services .card", [8, 16, 10, 18, 9, 15, 11, 14]],
-    ["#process .step", [8, 14, 10, 16]],
-    [".commitment-card", [9, 16, 12, 18]],
-    [".about-panel", [12]],
-    ["#faq", [8]],
-    [".contact-card", [10]],
-    [".form", [16]],
-  ];
-
-  parallaxGroups.forEach(([selector, strengths]) => {
-    const values = Array.isArray(strengths) ? strengths : [strengths];
-    $all(selector).forEach((el, index) => {
-      if (!(el instanceof HTMLElement) || el.classList.contains("gallery-card")) return;
-      if (!el.hasAttribute("data-parallax")) el.setAttribute("data-parallax", String(values[index % values.length]));
-      el.classList.add("parallax-lift");
-    });
-  });
-
-  // Keep layout-affecting movement to tablet/desktop; the global glow still moves on mobile.
-  const mq = window.matchMedia("(min-width: 760px)");
+  // Keep this restrained: only elements explicitly marked in the hero get depth.
+  const mq = window.matchMedia("(min-width: 900px)");
   if (!mq.matches) return;
 
   const elements = Array.from(document.querySelectorAll("[data-parallax]"));

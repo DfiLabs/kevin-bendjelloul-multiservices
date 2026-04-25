@@ -668,6 +668,9 @@ h1 {
     radial-gradient(680px 520px at 88% 14%, rgba(197, 106, 58, 0.18), transparent 60%),
     url("./assets/noise.svg");
   opacity: 1;
+  transform: translate3d(0, var(--hero-parallax, 0px), 0) scale(calc(1 + var(--hero-progress, 0) * 0.035));
+  transform-origin: center;
+  will-change: transform;
 }
 .hero::after {
   content: "";
@@ -686,6 +689,9 @@ h1 {
 }
 .hero-copy {
   max-width: 78ch;
+  transform: translate3d(0, calc(var(--hero-progress, 0) * -18px), 0);
+  opacity: calc(1 - var(--hero-progress, 0) * 0.16);
+  will-change: transform, opacity;
 }
 .hero h1 {
   max-width: 11ch;
@@ -753,6 +759,9 @@ h1 {
 }
 .hero-art {
   margin-top: clamp(26px, 5vw, 54px);
+  transform: translate3d(0, calc(var(--hero-progress, 0) * 22px), 0) scale(calc(1 + var(--hero-progress, 0) * 0.018));
+  opacity: calc(1 - var(--hero-progress, 0) * 0.08);
+  will-change: transform, opacity;
 }
 .hero .polaroid,
 .hero .atelier {
@@ -914,70 +923,13 @@ h1 {
 
 /* Second pass: remove scroll dead zones, restore light rhythm, and make content fail-open. */
 .scroll-story {
-  display: block;
-  margin-top: -16px;
-  padding: 0 0 34px;
-}
-.story-stage {
-  height: min(1040px, 115svh);
-  min-height: 620px;
-}
-.story-sticky {
-  top: 92px;
-  height: min(520px, calc(100svh - 132px));
-}
-.story-card {
-  box-shadow: 0 32px 90px rgba(15, 12, 8, 0.22);
-}
-.story-card.c1 {
-  width: min(560px, 86%);
-}
-.story-card.c2 {
-  width: min(480px, 78%);
-}
-.parallax-lift {
-  transform: translate3d(0, var(--py, 0px), 0);
-  will-change: transform;
-}
-.card.parallax-lift {
-  transform: translate3d(0, var(--py, 0px), 0) perspective(900px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg)) translateZ(0);
-}
-.about-panel.parallax-lift {
-  transform: translate3d(0, var(--py, 0px), 0) perspective(900px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg)) translateZ(0);
-}
-@media (max-width: 900px) {
-  .scroll-story {
-    display: none;
-  }
-}
-@media (max-width: 759px), (prefers-reduced-motion: reduce) {
-  .parallax-lift,
-  .card.parallax-lift,
-  .about-panel.parallax-lift {
-    transform: none;
-    will-change: auto;
-  }
+  display: none;
 }
 
 .reveal {
   opacity: 1;
   transform: none;
   filter: none;
-}
-.reveal.parallax-lift {
-  transform: translate3d(0, var(--py, 0px), 0);
-}
-.card.reveal.parallax-lift,
-.about-panel.reveal.parallax-lift {
-  transform: translate3d(0, var(--py, 0px), 0) perspective(900px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg)) translateZ(0);
-}
-@media (max-width: 759px), (prefers-reduced-motion: reduce) {
-  .reveal.parallax-lift,
-  .card.reveal.parallax-lift,
-  .about-panel.reveal.parallax-lift {
-    transform: none;
-    will-change: auto;
-  }
 }
 
 .band-proof,
