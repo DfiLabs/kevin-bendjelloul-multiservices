@@ -1,4 +1,7 @@
-/* Kevin Bendjelloul - Multi-services (static) */
+/* KVB Rénovation - editorial behavior layer
+   - Loads content.json
+   - Restrained motion: reveal-on-view + hero photo slow scale
+   - Gallery lightbox, contact wiring, copy chips, share, etc. */
 
 const CONFIG = {
   phoneDisplay: "06 32 63 77 23",
@@ -24,34 +27,24 @@ async function loadContentJson() {
 function applyContentJson(content) {
   if (!content || typeof content !== "object") return;
 
-  // Brand
   const b = content.brand && typeof content.brand === "object" ? content.brand : null;
   if (b) {
     const nameEl = document.querySelector(".brand-name");
     const subEl = document.querySelector(".brand-sub");
     if (nameEl && typeof b.name === "string" && b.name.trim()) nameEl.textContent = b.name;
-    if (subEl && typeof b.subtitle === "string" && b.subtitle.trim()) subEl.textContent = b.subtitle;
-  }
-
-  // Hero
-  const hero = content.hero && typeof content.hero === "object" ? content.hero : null;
-  if (hero) {
-    const sub = document.querySelector("[data-hero-subheadline]");
-    if (sub && typeof hero.subheadline === "string" && hero.subheadline.trim()) sub.textContent = hero.subheadline;
-    // Optional photo: if provided, set as background image on hero
-    if (typeof hero.photo === "string" && hero.photo.trim()) {
-      const heroEl = document.querySelector(".hero");
-      if (heroEl) {
-        heroEl.style.backgroundImage = `url(${hero.photo})`;
-        heroEl.classList.add("has-hero-photo");
-      }
-    } else {
-      const heroEl = document.querySelector(".hero");
-      if (heroEl) heroEl.classList.remove("has-hero-photo");
+    if (subEl && typeof b.subtitle === "string" && b.subtitle.trim()) {
+      subEl.textContent = "Béziers · Hérault";
     }
   }
 
-  // Contact
+  const hero = content.hero && typeof content.hero === "object" ? content.hero : null;
+  if (hero) {
+    const sub = document.querySelector("[data-hero-subheadline]");
+    if (sub && typeof hero.subheadline === "string" && hero.subheadline.trim()) {
+      sub.textContent = hero.subheadline;
+    }
+  }
+
   const c = content.contact && typeof content.contact === "object" ? content.contact : null;
   if (c) {
     if (typeof c.phoneDisplay === "string") CONFIG.phoneDisplay = c.phoneDisplay;
@@ -65,14 +58,6 @@ function applyContentJson(content) {
     }
   }
 
-  // CTA reassurance line
-  if (Array.isArray(content.ctaReassurance)) {
-    const items = content.ctaReassurance.filter((x) => typeof x === "string" && x.trim()).slice(0, 4);
-    const el = document.querySelector("[data-cta-reassurance]");
-    if (el && items.length) el.textContent = items.join(" • ");
-  }
-
-  // Service enhancements (bullets + meta)
   if (Array.isArray(content.services)) {
     const byId = new Map();
     content.services.forEach((s) => {
@@ -88,42 +73,20 @@ function applyContentJson(content) {
       const ul = card.querySelector("[data-service-examples]");
       if (ul) {
         ul.innerHTML = "";
-        const ex = Array.isArray(s.examples) ? s.examples.filter((x) => typeof x === "string" && x.trim()).slice(0, 3) : [];
+        const ex = Array.isArray(s.examples)
+          ? s.examples.filter((x) => typeof x === "string" && x.trim()).slice(0, 3)
+          : [];
         ex.forEach((t) => {
           const li = document.createElement("li");
           li.textContent = t;
           ul.appendChild(li);
         });
       }
-
-      const turn = card.querySelector("[data-service-turnaround]");
-      if (turn) turn.textContent = typeof s.turnaround === "string" ? s.turnaround : "";
-      const price = card.querySelector("[data-service-price]");
-      if (price) price.textContent = typeof s.fromPrice === "string" ? s.fromPrice : "";
     });
   }
 
-  // Proof pack (gallery + badges)
   const proof = content.proofPack && typeof content.proofPack === "object" ? content.proofPack : null;
   if (proof) {
-    // Badges
-    const badgesWrap = document.querySelector("[data-badges]");
-    if (badgesWrap && Array.isArray(proof.badges)) {
-      badgesWrap.innerHTML = "";
-      proof.badges
-        .filter((x) => x && typeof x === "object" && x.enabled)
-        .slice(0, 8)
-        .forEach((x) => {
-          const t = typeof x.label === "string" ? x.label.trim() : "";
-          if (!t) return;
-          const el = document.createElement("span");
-          el.className = "badge";
-          el.textContent = t;
-          badgesWrap.appendChild(el);
-        });
-    }
-
-    // Gallery
     const gallery = document.querySelector("[data-gallery]");
     if (gallery && Array.isArray(proof.gallery)) {
       gallery.innerHTML = "";
@@ -154,8 +117,6 @@ function applyContentJson(content) {
           img.src = src;
           img.alt = alt;
           media.appendChild(img);
-        } else {
-          media.textContent = "Photo";
         }
 
         const body = document.createElement("div");
@@ -166,15 +127,13 @@ function applyContentJson(content) {
         const loc = document.createElement("div");
         loc.className = "gallery-loc";
         loc.textContent = location || "";
-        const c = document.createElement("div");
-        c.className = "gallery-credit";
-        c.textContent = credit || "";
         const hint = document.createElement("div");
         hint.className = "gallery-open";
-        hint.textContent = "Agrandir";
-        body.appendChild(t);
-        body.appendChild(loc);
-        if (credit) body.appendChild(c);
+        hint.textContent = "Ouvrir";
+        const stack = document.createElement("div");
+        stack.appendChild(t);
+        if (location) stack.appendChild(loc);
+        body.appendChild(stack);
         body.appendChild(hint);
 
         card.appendChild(media);
@@ -182,92 +141,11 @@ function applyContentJson(content) {
         gallery.appendChild(card);
       });
     }
-
-    // Hero collage (artisan visual)
-    const collage = document.querySelector("[data-hero-collage]");
-    const heroShots = Array.isArray(content.heroShots) ? content.heroShots.filter((x) => x && typeof x === "object") : null;
-    if (collage && heroShots && heroShots.length) {
-      const figures = Array.from(collage.querySelectorAll("figure.polaroid"));
-      const shots = Array.from(collage.querySelectorAll("img[data-hero-shot]"));
-      shots.forEach((img) => {
-        const idx = Number.parseInt(String(img.getAttribute("data-hero-shot") || "0"), 10);
-        const g = heroShots[idx];
-        if (!g || typeof g !== "object") return;
-        const src = typeof g.src === "string" ? g.src : "";
-        const alt = typeof g.alt === "string" && g.alt.trim() ? g.alt.trim() : typeof g.title === "string" ? g.title : "Réalisation";
-        if (src && src.trim()) img.src = src;
-        img.alt = alt;
-        const fig = img.closest("figure");
-        const cap = fig ? fig.querySelector(".polaroid-cap") : null;
-        if (cap && typeof g.title === "string" && g.title.trim()) cap.textContent = g.title.trim();
-      });
-      figures.forEach((fig) => {
-        const img = fig.querySelector("img");
-        const hasSrc = img instanceof HTMLImageElement ? Boolean(img.getAttribute("src")) : false;
-        if (!hasSrc) fig.setAttribute("hidden", "true");
-        else fig.removeAttribute("hidden");
-      });
-    } else if (collage && Array.isArray(proof.gallery)) {
-      const figures = Array.from(collage.querySelectorAll("figure.polaroid"));
-      const shots = Array.from(collage.querySelectorAll("img[data-hero-shot]"));
-      shots.forEach((img) => {
-        const idx = Number.parseInt(String(img.getAttribute("data-hero-shot") || "0"), 10);
-        const g = proof.gallery[idx];
-        if (!g || typeof g !== "object") return;
-        const src = typeof g.src === "string" ? g.src : "";
-        const alt = typeof g.alt === "string" && g.alt.trim() ? g.alt.trim() : typeof g.title === "string" ? g.title : "Réalisation";
-        if (src && src.trim()) img.src = src;
-        img.alt = alt;
-        const fig = img.closest("figure");
-        const cap = fig ? fig.querySelector(".polaroid-cap") : null;
-        if (cap && typeof g.title === "string" && g.title.trim()) cap.textContent = g.title.trim();
-      });
-
-      // Hide empty figures if gallery is missing entries
-      figures.forEach((fig, i) => {
-        const img = fig.querySelector("img");
-        const hasSrc = img instanceof HTMLImageElement ? Boolean(img.getAttribute("src")) : false;
-        if (!hasSrc) fig.setAttribute("hidden", "true");
-        else fig.removeAttribute("hidden");
-      });
-    }
-
-    // Scroll story shots (sticky stack): reuse first gallery shots
-    const stage = document.querySelector("[data-story-stage]");
-    if (stage && Array.isArray(proof.gallery)) {
-      const storyShots = Array.isArray(content.storyShots) ? content.storyShots.filter((x) => x && typeof x === "object") : null;
-      const shots = Array.from(stage.querySelectorAll("img[data-story-shot]"));
-      shots.forEach((img) => {
-        const idx = Number.parseInt(String(img.getAttribute("data-story-shot") || "0"), 10);
-        const g = storyShots && storyShots[idx] ? storyShots[idx] : proof.gallery[idx];
-        const card = img.closest("[data-story-card]");
-        if (!g || typeof g !== "object") {
-          if (card) card.setAttribute("hidden", "true");
-          return;
-        }
-        const src = typeof g.src === "string" ? g.src : "";
-        const alt = typeof g.alt === "string" && g.alt.trim() ? g.alt.trim() : typeof g.title === "string" ? g.title : "Réalisation";
-        if (src && src.trim()) {
-          img.src = src;
-          if (card) card.removeAttribute("hidden");
-        } else if (card) {
-          card.setAttribute("hidden", "true");
-        }
-        img.alt = alt;
-      });
-    }
-
-    // Testimonials intentionally removed for multi-services version.
   }
 }
 
-function $(sel, root = document) {
-  return root.querySelector(sel);
-}
-
-function $all(sel, root = document) {
-  return Array.from(root.querySelectorAll(sel));
-}
+function $(sel, root = document) { return root.querySelector(sel); }
+function $all(sel, root = document) { return Array.from(root.querySelectorAll(sel)); }
 
 function showToast(msg) {
   const toast = $("[data-toast]");
@@ -282,7 +160,6 @@ function safeClipboardWrite(text) {
   if (navigator.clipboard && typeof navigator.clipboard.writeText === "function") {
     return navigator.clipboard.writeText(text);
   }
-  // Fallback
   return new Promise((resolve, reject) => {
     try {
       const ta = document.createElement("textarea");
@@ -295,9 +172,7 @@ function safeClipboardWrite(text) {
       document.execCommand("copy");
       ta.remove();
       resolve();
-    } catch (e) {
-      reject(e);
-    }
+    } catch (e) { reject(e); }
   });
 }
 
@@ -306,25 +181,21 @@ function setYear() {
   $all("[data-year]").forEach((el) => (el.textContent = String(y)));
 }
 
-// Availability hint removed on purpose (kept simple and timeless).
-
 function applyContactConfig() {
-  // Update all phone links (keep text "Appeler" if present)
   $all("a[data-phone-link]").forEach((a) => {
     a.href = `tel:${CONFIG.phoneTel}`;
-    if (a.textContent.trim().match(/^0\d(\s?\d{2}){4}$/) || a.textContent.includes("00 00")) {
+    const numEl = a.querySelector(".hero-call-num");
+    if (numEl) numEl.textContent = CONFIG.phoneDisplay;
+    else if (a.textContent.trim().match(/^0\d(\s?\d{2}){4}$/) || a.textContent.includes("00 00")) {
       a.textContent = CONFIG.phoneDisplay;
     }
   });
 
-  // Update email links
   $all("a[data-email-link]").forEach((a) => {
     a.href = `mailto:${CONFIG.email}`;
-    // Do not print the raw email unless the element already contains it
     if (a.textContent.includes("@")) a.textContent = CONFIG.email;
   });
 
-  // WhatsApp links (optional)
   const waTel = String(CONFIG.whatsappTel || CONFIG.phoneTel || "");
   const digits = waTel.replace(/[^\d+]/g, "").replace("+", "");
   const waUrl = `https://wa.me/${encodeURIComponent(digits)}?text=${encodeURIComponent(CONFIG.whatsappMessage || "")}`;
@@ -339,21 +210,11 @@ function applyContactConfig() {
     a.rel = "noreferrer";
   });
 
-  // WhatsApp QR (optional)
-  const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=${encodeURIComponent(waUrl)}`;
-  $all("img[data-wa-qr]").forEach((img) => {
-    img.src = qrUrl;
-    img.loading = "lazy";
-    img.decoding = "async";
-  });
-
-  // Update copy chips for placeholders
   $all("button[data-copy]").forEach((btn) => {
     const v = String(btn.getAttribute("data-copy") || "");
     if (v === "+33632637723") btn.setAttribute("data-copy", CONFIG.phoneTel);
   });
 
-  // Update JSON-LD if present
   const ld = document.querySelector('script[type="application/ld+json"]');
   if (ld && ld.textContent) {
     try {
@@ -363,9 +224,7 @@ function applyContactConfig() {
       else if ("email" in parsed) delete parsed.email;
       parsed.url = `${location.origin}${location.pathname}`;
       ld.textContent = JSON.stringify(parsed, null, 2);
-    } catch (_) {
-      // ignore
-    }
+    } catch (_) { /* ignore */ }
   }
 }
 
@@ -389,8 +248,7 @@ function wireReveal() {
   const els = $all(".reveal");
   if (!els.length) return;
 
-  // Ensure above-the-fold feels snappy
-  els.slice(0, 3).forEach((el) => el.classList.add("is-visible"));
+  els.slice(0, 2).forEach((el) => el.classList.add("is-visible"));
 
   if (!("IntersectionObserver" in window)) {
     els.forEach((el) => el.classList.add("is-visible"));
@@ -406,204 +264,33 @@ function wireReveal() {
         }
       }
     },
-    { threshold: 0.12 }
+    { threshold: 0.12, rootMargin: "0px 0px -8% 0px" }
   );
 
   els.forEach((el) => io.observe(el));
 }
 
-function wireSpotlight() {
+function wireHeroPhotoScale() {
   const prefersReduced = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   if (prefersReduced) return;
 
-  let raf = 0;
-  let lastX = 0;
-  let lastY = 0;
-  let lastMoveAt = 0;
-
-  const set = () => {
-    raf = 0;
-    const x = Math.round((lastX / window.innerWidth) * 100);
-    const y = Math.round((lastY / window.innerHeight) * 100);
-    document.documentElement.style.setProperty("--spot-x", `${x}%`);
-    document.documentElement.style.setProperty("--spot-y", `${y}%`);
-    lastMoveAt = Date.now();
-  };
-
-  window.addEventListener(
-    "pointermove",
-    (e) => {
-      lastX = e.clientX;
-      lastY = e.clientY;
-      if (!raf) raf = window.requestAnimationFrame(set);
-    },
-    { passive: true }
-  );
-
-  // On mobile (or when no pointer move), drive spotlight by scroll for "wow" effect.
-  let raf2 = 0;
-  const setScrollGlow = () => {
-    raf2 = 0;
-    // If the user is actively moving the pointer, don't fight it.
-    if (Date.now() - lastMoveAt < 1200) return;
-    const vh = Math.max(1, window.innerHeight);
-    const doc = document.documentElement;
-    const maxScroll = Math.max(1, doc.scrollHeight - vh);
-    const p = Math.max(0, Math.min(1, window.scrollY / maxScroll));
-    const x = 50;
-    const y = Math.round(12 + p * 30); // 12%..42%
-    doc.style.setProperty("--spot-x", `${x}%`);
-    doc.style.setProperty("--spot-y", `${y}%`);
-  };
-  setScrollGlow();
-  window.addEventListener(
-    "scroll",
-    () => {
-      if (!raf2) raf2 = window.requestAnimationFrame(setScrollGlow);
-    },
-    { passive: true }
-  );
-  window.addEventListener(
-    "resize",
-    () => {
-      if (!raf2) raf2 = window.requestAnimationFrame(setScrollGlow);
-    },
-    { passive: true }
-  );
-}
-
-function wireHeroParallax() {
-  const prefersReduced = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  if (prefersReduced) return;
-
+  const img = document.querySelector("[data-hero-photo]");
   const hero = document.querySelector(".hero");
-  if (!hero) return;
-
-  let raf = 0;
-  const onScroll = () => {
-    raf = 0;
-    const r = hero.getBoundingClientRect();
-    const vh = Math.max(1, window.innerHeight);
-    const progress = Math.min(1, Math.max(0, -r.top / Math.max(1, r.height * 0.72)));
-    const offset = Math.round(progress * 34);
-    document.documentElement.style.setProperty("--hero-parallax", `${offset}px`);
-    document.documentElement.style.setProperty("--hero-progress", progress.toFixed(4));
-  };
-
-  onScroll();
-  window.addEventListener(
-    "scroll",
-    () => {
-      if (!raf) raf = window.requestAnimationFrame(onScroll);
-    },
-    { passive: true }
-  );
-  window.addEventListener(
-    "resize",
-    () => {
-      if (!raf) raf = window.requestAnimationFrame(onScroll);
-    },
-    { passive: true }
-  );
-}
-
-function wireElementParallax() {
-  const prefersReduced = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  if (prefersReduced) return;
-
-  // Keep this restrained: only elements explicitly marked in the hero get depth.
-  const mq = window.matchMedia("(min-width: 900px)");
-  if (!mq.matches) return;
-
-  const elements = Array.from(document.querySelectorAll("[data-parallax]"));
-  if (!elements.length) return;
-
-  const visible = new Set();
-  const io = new IntersectionObserver(
-    (entries) => {
-      for (const e of entries) {
-        if (e.isIntersecting) visible.add(e.target);
-        else visible.delete(e.target);
-      }
-    },
-    { threshold: 0, rootMargin: "200px 0px 200px 0px" }
-  );
-  elements.forEach((el) => io.observe(el));
+  if (!img || !hero) return;
 
   let raf = 0;
   const tick = () => {
     raf = 0;
+    const r = hero.getBoundingClientRect();
     const vh = Math.max(1, window.innerHeight);
-    const center = vh / 2;
-    for (const el of visible) {
-      const strength = Number.parseFloat(el.getAttribute("data-parallax") || "0");
-      if (!Number.isFinite(strength) || strength === 0) continue;
-      const r = el.getBoundingClientRect();
-      const elCenter = r.top + r.height / 2;
-      const delta = (elCenter - center) / vh; // -0.5..0.5-ish
-      const y = Math.max(-strength, Math.min(strength, -delta * strength * 2));
-      el.style.setProperty("--py", `${y}px`);
-    }
+    const progress = Math.min(1, Math.max(0, -r.top / Math.max(1, r.height * 0.92)));
+    const zoom = 1 + progress * 0.05;
+    img.style.setProperty("--hero-zoom", zoom.toFixed(4));
   };
 
-  const onScroll = () => {
-    if (!raf) raf = window.requestAnimationFrame(tick);
-  };
   tick();
-  window.addEventListener("scroll", onScroll, { passive: true });
-  window.addEventListener("resize", onScroll, { passive: true });
-}
-
-function wireScrollWowGlow() {
-  const prefersReduced = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  if (prefersReduced) return;
-
-  let raf = 0;
-  const set = () => {
-    raf = 0;
-    const vh = Math.max(1, window.innerHeight);
-    const doc = document.documentElement;
-    const maxScroll = Math.max(1, doc.scrollHeight - vh);
-    const p = Math.max(0, Math.min(1, window.scrollY / maxScroll));
-
-    // Move glow down + side-to-side as you scroll (more visible on desktop)
-    const y = Math.round(12 + p * 72); // 12%..84%
-    const wave = Math.sin(p * Math.PI * 2);
-    const x = Math.round(50 + wave * 28); // 22%..78%
-    doc.style.setProperty("--scroll-glow-x", `${x}%`);
-    doc.style.setProperty("--scroll-glow-y", `${y}%`);
-    doc.style.setProperty("--wow-x", `${x}%`);
-    doc.style.setProperty("--wow-y", `${y}%`);
-
-    // Extra "wow": a sheen sweep that moves as you scroll
-    // (CSS uses --sheen-x to translate a highlight across cards)
-    const loops = 3; // number of sweeps from top to bottom
-    const t = (p * loops) % 1; // 0..1 repeating
-    const sheenX = Math.round(-120 + t * 260); // -120%..140%
-    doc.style.setProperty("--sheen-x", `${sheenX}%`);
-
-    // Subtle rotation for the glow layer
-    doc.style.setProperty("--wow-rot", `${Math.round(p * 360)}deg`);
-
-    // Slight background stripe drift (used by CSS as background-position)
-    doc.style.setProperty("--grid-y", `${Math.round(p * 180)}px`);
-  };
-
-  set();
-  window.addEventListener(
-    "scroll",
-    () => {
-      if (!raf) raf = window.requestAnimationFrame(set);
-    },
-    { passive: true }
-  );
-  window.addEventListener(
-    "resize",
-    () => {
-      if (!raf) raf = window.requestAnimationFrame(set);
-    },
-    { passive: true }
-  );
+  window.addEventListener("scroll", () => { if (!raf) raf = window.requestAnimationFrame(tick); }, { passive: true });
+  window.addEventListener("resize", () => { if (!raf) raf = window.requestAnimationFrame(tick); }, { passive: true });
 }
 
 function wireNav() {
@@ -615,7 +302,6 @@ function wireNav() {
     toggle.setAttribute("aria-expanded", "false");
     menu.classList.remove("open");
   };
-
   const open = () => {
     toggle.setAttribute("aria-expanded", "true");
     menu.classList.add("open");
@@ -623,8 +309,7 @@ function wireNav() {
 
   toggle.addEventListener("click", () => {
     const expanded = toggle.getAttribute("aria-expanded") === "true";
-    if (expanded) close();
-    else open();
+    if (expanded) close(); else open();
   });
 
   document.addEventListener("click", (e) => {
@@ -634,9 +319,7 @@ function wireNav() {
     close();
   });
 
-  $all("a.nav-link", menu).forEach((a) => {
-    a.addEventListener("click", close);
-  });
+  $all("a.nav-link", menu).forEach((a) => a.addEventListener("click", close));
 }
 
 function wireStickyHeaderAndActiveNav() {
@@ -644,22 +327,14 @@ function wireStickyHeaderAndActiveNav() {
   const navLinks = $all('.nav-link[href^="#"]');
   if (!topbar && !navLinks.length) return;
 
-  // Sticky header background on scroll
   let raf = 0;
   const onScroll = () => {
     raf = 0;
     if (topbar) topbar.classList.toggle("is-scrolled", window.scrollY > 8);
   };
   onScroll();
-  window.addEventListener(
-    "scroll",
-    () => {
-      if (!raf) raf = window.requestAnimationFrame(onScroll);
-    },
-    { passive: true }
-  );
+  window.addEventListener("scroll", () => { if (!raf) raf = window.requestAnimationFrame(onScroll); }, { passive: true });
 
-  // Active section highlight (skip mobile menu button; highlight only hash links)
   const links = navLinks.filter((a) => a.getAttribute("href") && a.getAttribute("href") !== "#top");
   const items = [];
   for (const a of links) {
@@ -680,14 +355,12 @@ function wireStickyHeaderAndActiveNav() {
     }
   };
 
-  // Default to first visible or first link
   setActive(items[0].id);
 
   if (!("IntersectionObserver" in window)) return;
 
   const io = new IntersectionObserver(
     (entries) => {
-      // Pick the most visible intersecting section
       const visible = entries
         .filter((e) => e.isIntersecting)
         .sort((a, b) => (b.intersectionRatio || 0) - (a.intersectionRatio || 0));
@@ -696,12 +369,7 @@ function wireStickyHeaderAndActiveNav() {
       const hit = items.find((x) => x.section === el);
       if (hit) setActive(hit.id);
     },
-    {
-      root: null,
-      // Activate a section when it enters the upper part of the viewport
-      rootMargin: "-20% 0px -70% 0px",
-      threshold: [0, 0.08, 0.16, 0.25, 0.4, 0.6],
-    }
+    { root: null, rootMargin: "-20% 0px -70% 0px", threshold: [0, 0.08, 0.16, 0.25, 0.4, 0.6] }
   );
 
   items.forEach((it) => io.observe(it.section));
@@ -713,52 +381,21 @@ function wireCopy() {
     if (!(t instanceof Element)) return;
     const el = t.closest("[data-copy]");
     if (!el) return;
-
     const value = el.getAttribute("data-copy");
     if (!value) return;
-
     safeClipboardWrite(value)
       .then(() => showToast("Copié."))
       .catch(() => showToast("Impossible de copier."));
   });
 }
 
-function wireTilt() {
-  const prefersReduced = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  if (prefersReduced) return;
-
-  const els = $all("[data-tilt]");
-  if (!els.length) return;
-
-  const setTilt = (el, rx, ry) => {
-    el.style.setProperty("--rx", `${rx}deg`);
-    el.style.setProperty("--ry", `${ry}deg`);
-  };
-
-  for (const el of els) {
-    el.addEventListener("pointermove", (e) => {
-      const r = el.getBoundingClientRect();
-      const px = (e.clientX - r.left) / Math.max(1, r.width);
-      const py = (e.clientY - r.top) / Math.max(1, r.height);
-      const ry = (px - 0.5) * 6; // left/right (subtle)
-      const rx = (0.5 - py) * 4; // up/down (subtle)
-      setTilt(el, rx, ry);
-    });
-    el.addEventListener("pointerleave", () => setTilt(el, 0, 0));
-  }
-}
-
 function wireMailtoForm() {
   const form = $("[data-contact-form]");
   if (!(form instanceof HTMLFormElement)) return;
-
   form.action = `https://formsubmit.co/${CONFIG.email}`;
   form.method = "POST";
   form.enctype = "multipart/form-data";
-
-  form.addEventListener("submit", () => {
-    showToast("Envoi de la demande…");
-  });
+  form.addEventListener("submit", () => showToast("Envoi de la demande…"));
 }
 
 function wirePhotoUpload() {
@@ -779,9 +416,7 @@ function wirePhotoUpload() {
       const files = input.files ? Array.from(input.files) : [];
       // @ts-ignore
       return files.length ? navigator.canShare({ files }) : navigator.canShare({ text: "x" });
-    } catch {
-      return false;
-    }
+    } catch { return false; }
   };
 
   if (isShareSupported()) shareBtn.removeAttribute("hidden");
@@ -791,33 +426,24 @@ function wirePhotoUpload() {
     preview.innerHTML = "";
     if (countEl instanceof HTMLElement) countEl.textContent = String(files.length || 0);
     if (shareBtn instanceof HTMLButtonElement) shareBtn.disabled = files.length === 0;
-    if (!files.length) {
-      preview.setAttribute("hidden", "true");
-      return;
-    }
+    if (!files.length) { preview.setAttribute("hidden", "true"); return; }
     preview.removeAttribute("hidden");
 
     files.slice(0, 6).forEach((f) => {
       const item = document.createElement("div");
       item.className = "upload-item";
-
       const thumb = document.createElement("div");
       thumb.className = "upload-thumb";
-
       if (f.type && f.type.startsWith("image/")) {
         const img = document.createElement("img");
         img.alt = f.name || "Photo";
         img.loading = "lazy";
         img.src = URL.createObjectURL(f);
         thumb.appendChild(img);
-      } else {
-        thumb.textContent = "Fichier";
-      }
-
+      } else { thumb.textContent = "Fichier"; }
       const meta = document.createElement("div");
       meta.className = "upload-meta";
       meta.textContent = f.name || "Photo";
-
       item.appendChild(thumb);
       item.appendChild(meta);
       preview.appendChild(item);
@@ -848,19 +474,11 @@ function wirePhotoUpload() {
     }
 
     const text = [
-      "Demande de devis",
-      "",
-      message,
-      "",
+      "Demande de devis", "", message, "",
       `Nom: ${name}`,
       `Téléphone: ${phone}`,
       email ? `Email: ${email}` : "",
-    ]
-      .filter(Boolean)
-      .join("\n");
-
-    const total = files.reduce((s, f) => s + (f.size || 0), 0);
-    if (total > 24 * 1024 * 1024) showToast("Photos volumineuses: réduisez le nombre si besoin.");
+    ].filter(Boolean).join("\n");
 
     try {
       // @ts-ignore
@@ -879,9 +497,7 @@ function wirePhotoUpload() {
 
 function wireScrollTop() {
   $all("[data-scroll-top]").forEach((btn) => {
-    btn.addEventListener("click", () => {
-      window.scrollTo({ top: 0, behavior: "smooth" });
-    });
+    btn.addEventListener("click", () => window.scrollTo({ top: 0, behavior: "smooth" }));
   });
 }
 
@@ -920,7 +536,6 @@ function wireGalleryLightbox() {
     modal.setAttribute("hidden", "true");
     document.body.classList.remove("lightbox-open");
   };
-
   const open = (card) => {
     if (!(card instanceof HTMLElement) || !(img instanceof HTMLImageElement)) return;
     const src = card.getAttribute("data-full-src") || "";
@@ -956,88 +571,19 @@ function wireGalleryLightbox() {
   });
 }
 
-function clamp01(x) {
-  return Math.max(0, Math.min(1, x));
-}
-
-function lerp(a, b, t) {
-  return a + (b - a) * t;
-}
-
-function wireScrollStory() {
-  const prefersReduced = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  if (prefersReduced) return;
-
-  const mq = window.matchMedia("(min-width: 900px)");
-  if (!mq.matches) return;
-
-  const stage = document.querySelector("[data-story-stage]");
-  if (!(stage instanceof HTMLElement)) return;
-
-  const cards = Array.from(stage.querySelectorAll("[data-story-card]"));
-  if (!cards.length) return;
-
-  let raf = 0;
-  const tick = () => {
-    raf = 0;
-    const r = stage.getBoundingClientRect();
-    const vh = Math.max(1, window.innerHeight);
-    // progress over the stage height (stage is tall)
-    const p = clamp01((vh * 0.65 - r.top) / Math.max(1, r.height - vh * 0.35));
-
-    // Drive spark intensity
-    document.documentElement.style.setProperty("--story-p", p.toFixed(4));
-
-    const t = p;
-    const set = (el, x, y, s, rot, z) => {
-      el.style.zIndex = String(z);
-      // Keep the card centered, then apply our offsets.
-      el.style.transform = `translate3d(-50%, -50%, 0) translate3d(${x}px, ${y}px, 0) rotate(${rot}deg) scale(${s})`;
-    };
-
-    if (cards.length === 1) {
-      set(cards[0], 0, 0, 1.0, 0, 1);
-    } else if (cards.length === 2) {
-      set(cards[0], lerp(-48, -10, t), lerp(18, -10, t), lerp(1.06, 1.0, t), lerp(-6.2, -1.2, t), 2);
-      set(cards[1], lerp(58, 14, t), lerp(56, 8, t), lerp(1.02, 0.98, t), lerp(6.2, 1.4, t), 1);
-    } else {
-      const c1 = cards[0];
-      const c2 = cards[1];
-      const c3 = cards[2];
-      set(c1, lerp(-56, -10, t), lerp(22, -10, t), lerp(1.06, 1.0, t), lerp(-7, -1.2, t), 3);
-      set(c2, lerp(64, 16, t), lerp(56, 8, t), lerp(1.03, 0.98, t), lerp(6.8, 1.6, t), 2);
-      set(c3, lerp(-10, 0, t), lerp(122, 40, t), lerp(1.0, 0.96, t), lerp(-2.4, 1.4, t), 1);
-    }
-  };
-
-  const onScroll = () => {
-    if (!raf) raf = window.requestAnimationFrame(tick);
-  };
-
-  tick();
-  window.addEventListener("scroll", onScroll, { passive: true });
-  window.addEventListener("resize", onScroll, { passive: true });
-}
-
 document.addEventListener("DOMContentLoaded", async () => {
   setYear();
   const content = await loadContentJson();
   applyContentJson(content);
   applyContactConfig();
   wireReveal();
-  wireSpotlight();
-  wireHeroParallax();
-  wireElementParallax();
-  wireScrollWowGlow();
+  wireHeroPhotoScale();
   wireNav();
   wireStickyHeaderAndActiveNav();
   wireCopy();
-  wireTilt();
   wireMailtoForm();
   wirePhotoUpload();
   wireLegalLinks();
-  wireScrollStory();
   wireGalleryLightbox();
   wireScrollTop();
 });
-
