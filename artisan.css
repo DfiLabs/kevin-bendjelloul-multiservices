@@ -105,6 +105,9 @@ strong { font-weight: 600; }
   border-top: 1px solid var(--hairline);
   margin: 36px 0;
 }
+.project-split {
+  margin: clamp(64px, 9vw, 120px) 0 clamp(36px, 5vw, 64px);
+}
 
 /* ---------- Container ---------- */
 .container {
@@ -1008,6 +1011,62 @@ strong { font-weight: 600; }
   color: var(--ink-3);
 }
 
+/* ---------- Contact QR finish ---------- */
+.ed-qr {
+  grid-column: 1 / -1;
+  margin-top: clamp(18px, 3vw, 36px);
+  padding-top: clamp(24px, 4vw, 42px);
+  border-top: 1px solid var(--hairline);
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: clamp(24px, 5vw, 72px);
+  align-items: end;
+}
+.ed-qr .eyebrow {
+  margin-bottom: 12px;
+}
+.ed-qr h3 {
+  font-family: var(--serif);
+  font-size: clamp(28px, 3.2vw, 44px);
+  line-height: 1;
+  font-style: italic;
+  font-weight: 400;
+  letter-spacing: -0.015em;
+  color: var(--ink);
+}
+.ed-qr p {
+  margin: 12px 0 0;
+  max-width: 46ch;
+  color: var(--ink-2);
+  font-size: 15px;
+  line-height: 1.6;
+}
+.ed-qr-code {
+  display: block;
+  width: 180px;
+  height: 180px;
+  padding: 12px;
+  border: 1px solid var(--hairline);
+  background: rgba(255, 252, 244, 0.62);
+  transition: border-color 0.18s ease, transform 0.18s ease;
+}
+.ed-qr-code:hover {
+  border-color: var(--terracotta-deep);
+  transform: translateY(-2px);
+}
+.ed-qr-code:focus-visible {
+  outline: 2px solid var(--terracotta-deep);
+  outline-offset: 4px;
+}
+.ed-qr-code .wa-qr {
+  width: 100%;
+  height: 100%;
+  display: block;
+  border: 0;
+  border-radius: 0;
+  background: #fff;
+}
+
 /* ---------- Lightbox (kept, retuned) ---------- */
 body.lightbox-open { overflow: hidden; }
 .gallery-lightbox {
@@ -1377,6 +1436,15 @@ body.lightbox-open { overflow: hidden; }
 
   .ed-contact-meta > div { grid-template-columns: 1fr; gap: 4px; padding: 14px 0; }
   .ed-contact-meta dd { font-size: 18px; }
+
+  .ed-qr {
+    grid-template-columns: 1fr;
+    align-items: start;
+  }
+  .ed-qr-code {
+    width: 156px;
+    height: 156px;
+  }
 
   .legal-grid { grid-template-columns: 1fr; }
   .legal-item { border-right: 0; padding: 14px 0; }

@@ -210,6 +210,12 @@ function applyContactConfig() {
     a.rel = "noreferrer";
   });
 
+  $all("img[data-wa-qr]").forEach((img) => {
+    img.src = `https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=${encodeURIComponent(waUrl)}`;
+    img.loading = "lazy";
+    img.decoding = "async";
+  });
+
   $all("button[data-copy]").forEach((btn) => {
     const v = String(btn.getAttribute("data-copy") || "");
     if (v === "+33632637723") btn.setAttribute("data-copy", CONFIG.phoneTel);
